@@ -1,0 +1,72 @@
+html {
+    background-color: white;
+    color: #031c37;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 12pt;
+    overflow: hidden;
+    height: 100vh;
+}
+
+button {
+    margin: .5em;
+    padding: .3em;
+    font-size: 12pt;
+}
+
+#page-content {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#buttons {
+    width: 25vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.action-button {
+    width: 15vw;
+    margin-left: auto;
+}
+
+#center-column {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#vitals {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.vital-category {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+#text-display {
+    width: 35vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-item {
+    text-align: center;
+    font-size: 12pt;
+    margin-top: .5vh;
+    margin-bottom: .5vh;
+}
+
+.event-button {
+    width: 15vw;
+    margin: auto;
+    margin-top: 1vh;
+}
