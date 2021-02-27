@@ -17,6 +17,18 @@ class Resource_Manager{
         this.inventory = {};
     }
 
+    getIndexOf(item){
+        var x = Object.keys(this.inventory).length;
+        var counter = 0;
+        for(var i in this.inventory){
+            if(item == i)
+            {
+                return counter;
+            }
+            counter++;
+        }
+    }
+
     addItem(item, count){
         if(this.inventory[item] != null)
         {
@@ -26,6 +38,24 @@ class Resource_Manager{
         else{
             console.log("you have found " + count + " " + item + ", adding to inventory")
             this.inventory[item] = count;
+        }
+    }
+
+    removeItem(item, count){
+        if(this.inventory[item] == null || count > this.inventory[item] || count < 0)
+        {
+            console.log("cannot remove " + count + " " + item);
+            return false;
+        }
+        else if(this.inventory[item] - count == 0) {
+            console.log("removing " + item);
+            delete this.inventory[item];
+            return true;
+        }
+        else{
+            console.log("removing " + count + " " + item);
+            this.inventory[item] -= count;
+            return true;
         }
     }
 
@@ -54,6 +84,15 @@ class Resource_Manager{
 
 export {Resource_Manager, items}
 
-//console.log("Start Resource Manager Test");
-//var rm = new ResourceManager();
-//document.getElementById("resource-display").innerHTML = rm.htmlDescription;
+// console.log("Start Resource Manager Test");
+// var rm = new Resource_Manager();
+
+// rm.addItem(items.WATER, 11);
+// rm.addItem(items.FOOD, 20);
+// rm.addItem(items.ION_BATTERIES, 3);
+// rm.addItem(items.WIRING, 3);
+
+// rm.removeItem(items.FOOD, 20);
+// rm.removeItem(items.WATER, 1);
+
+// rm.decription;
