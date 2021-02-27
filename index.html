@@ -33,28 +33,14 @@
       </div>
 
       <div id="text-display">
-        <!-- Likely add text items with JS but this works as a placeholder -->
-        <!-- I'm thinking that we could make them slowly fade in instead of all immediately appear -->
-        <p class="text-item"><em>The warning alarm is blairing in your ear</em></p>
-        <p class="text-item">Please, shut up</p>
-        <p class="text-item"><em>Red lights blink accross the control board</em></p>
-        <p class="text-item">That's not good</p>
-        <p class="text-item"><em>"Ship integrity: critical"</em></p>
-        <p class="text-item"><em>"Vitals: critical"</em></p>
-        <p class="text-item"><em>"Chance of survival: low"</em></p>
-        <p class="text-item">That was the ship's computer, SAL</p>
-        <p class="text-item">He wasn't helping</p>
-        <p class="text-item">My body feels like it's been hit by a star freighter</p>
-        <p class="text-item"><em>Suddenly, you come to your senses</em></p>
-        <p class="text-item">Oh god, the mail</p>
-        <p class="text-item">I need to deliver the mail</p>
-        <!-- More buttons can be added depending on the context -->
-        <button class="event-button">Look for the mail</button>
+        
+        <!-- Location text and buttons inserted by JS here -->
+        
       </div>
 
       <div id="ascii-art">
         <!-- Render the ASCII art for the current location -->
-        <pre>
+        <pre class="art-piece">
                                                                        _____________________
                                    |                                  /  /  / / // / // / //\_______
                                |===|===|                         ____/ /  /   / /  /  /  / // / // /|
@@ -63,7 +49,7 @@
                       / |===  |===     |===   || 0 \\           \___ __________________ _ _ _  _____/
                      /    |===  |===  |==  ...||,|7_\\              \\_____ |  | | |__/ / / / /
                __..-/\/\/\/\/\/\/\/\/\/\/( )\\\\\`````-.._           \ \ \ \|  |   | ________/
-            _-"    ___   ___  ___  ___ _____   _________   "-_         \____ | |   ||/
+            _-"    ___   ___  ___  ___ _____   _________  "-_         \____ | |   ||/
          _-"      / __| | _ \/ _ \/ __|_   _| |\       /|    "-_           \| | O| |
       _-"        | (_ | | |_/ (_) \__ \ | |   |/\_____/\|       "-_      ,_ | |   ||
    _-"            \___| |_|  \___/|___/ |_|   |_________|          "-_ ,`.,`/ O |  /
@@ -80,7 +66,8 @@
 
   </div>
   <script type="module" src="ResourceManager.js"></script>
-  <script type="module" src="script.js"></script>
+  <script type="module" src="scripts.js"></script>
+  <script type="module" src="Crash-site.js"></script>
   
 </body>
 </html>
