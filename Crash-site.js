@@ -1,10 +1,11 @@
 import {addTextItem, addEventButton, setArtwork} from "./scripts.js"
+import {asciiCrash} from "./ASCII-Art.js"
 
 class Crash_Site {
     loadLocation(){
         this.setText();
         this.setEventButtons();
-        //this.setLocationArtwork();
+        this.setLocationArtwork();
     }
 
     setText(){
@@ -28,9 +29,7 @@ class Crash_Site {
     }
 
     setLocationArtwork() {
-        setArtwork(
-            
-        )
+        setArtwork(asciiCrash)
     }
 }
 

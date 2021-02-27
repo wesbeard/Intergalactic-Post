@@ -27,6 +27,7 @@ else{
 //temp script to replace the "resource display info" (this will belong in some sort of update display loop later)
 document.getElementById("resource-display").innerHTML = _ResourceManager.htmlDescription;
 
+// Add a text item to the text display
 function addTextItem(text, emphasis = false) {
     var textDisplay = document.getElementById("text-display");
     var textBox = document.createElement("p");
@@ -38,6 +39,7 @@ function addTextItem(text, emphasis = false) {
     textDisplay.appendChild(textBox);
 }
 
+// Add a button to the text display
 function addEventButton(buttonText, onclick) {
     var textDisplay = document.getElementById("text-display");
     var button = document.createElement("button");
@@ -47,11 +49,12 @@ function addEventButton(buttonText, onclick) {
     textDisplay.appendChild(button);
 }
 
+// Set the current ASCII artwork
 function setArtwork(art) {
     var asciiBox = document.getElementById("ascii-art");
     var pre = document.createElement("pre");
     pre.setAttribute("class", "art-piece");
-    pre.innerHTML = art;
+    pre.textContent = art;
     asciiBox.appendChild(pre);
 }
 
