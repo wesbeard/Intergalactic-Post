@@ -1,9 +1,18 @@
 const items = {
-    FOOD: "food",
-    WATER: "water"
+    FOOD: "Food",
+    WATER: "Water",
+    MECHANICAL_PARTS: "Mechanical parts",
+    CIRCUT_BOARDS: "Circuit Boards",
+    WIRING: "Wiring",
+    SCRAP_METAL: "Scrap Metal",
+    REFINED_STEEL: "Refined Steel",
+    ALLOY_STEEL: "Alloy Steel",
+    ION_BATTERIES: "Ion Batteries",
+    MICRO_COMPUTER: "Micro-Computer",
+    ALIEN_GUTS: "Alien Guts"
 }
 
-class ResourceManager{
+class Resource_Manager{
     constructor(){
         this.inventory = {};
     }
@@ -31,14 +40,20 @@ class ResourceManager{
 
         return desc;
     }
+
+    get htmlDescription(){
+        var desc = "";
+        for(var key in this.inventory){
+            var value = this.inventory[key];
+            desc += "<p class='resource'>" + key + ": " + value + "</p>";
+        }
+        return desc;
+    }
+
 }
 
-console.log("Start Resource Manager Test");
+export {Resource_Manager, items}
 
-var rm = new ResourceManager();
-
-rm.addItem(items.FOOD, 1);
-rm.addItem(items.FOOD, 3);
-rm.addItem(items.WATER, 2);
-rm.addItem(items.WATER, 4);
-console.log(rm.decription);
+//console.log("Start Resource Manager Test");
+//var rm = new ResourceManager();
+//document.getElementById("resource-display").innerHTML = rm.htmlDescription;
