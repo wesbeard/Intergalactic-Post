@@ -70,3 +70,8 @@ button {
     margin: auto;
     margin-top: 1vh;
 }
+
+#ascii-art {
+    font-family: monospace;
+    white-space: pre;
+}
