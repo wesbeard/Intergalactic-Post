@@ -1,6 +1,7 @@
 const items = {
     FOOD: "Food",
     WATER: "Water",
+    AIR: "Air",
     MECHANICAL_PARTS: "Mechanical parts",
     CIRCUT_BOARDS: "Circuit Boards",
     WIRING: "Wiring",
