@@ -83,3 +83,7 @@ button:hover {
     position: fixed;
     bottom: 0px;
 }
+
+.RedText{
+    color:red;
+}

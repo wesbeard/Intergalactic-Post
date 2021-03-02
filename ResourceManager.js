@@ -27,8 +27,12 @@ class Resource_Manager{
             }
             counter++;
         }
+        console.log("%cCould not find " + item, "color:red");
     }
 
+    /*
+    Adds item(s) to the inventory
+    */
     addItem(item, count){
         if(this.inventory[item] != null)
         {
@@ -41,10 +45,25 @@ class Resource_Manager{
         }
     }
 
+    //returns the amount of items
+    getItemCount(item){
+        if(this.inventory[item] == null)
+        {
+            console.log("%cCould not find " + item, "color:red");
+            return 0;
+        }
+        else{
+            return this.inventory[item];
+        }
+    }
+
+    /*
+    Removes an item from this.inventory but only if the amount attempted to remove exists
+    */
     removeItem(item, count){
         if(this.inventory[item] == null || count > this.inventory[item] || count < 0)
         {
-            console.log("cannot remove " + count + " " + item);
+            console.log("%cCannot remove " + count + " " + item, "color:red");
             return false;
         }
         else if(this.inventory[item] - count == 0) {
@@ -59,6 +78,9 @@ class Resource_Manager{
         }
     }
 
+    /*
+    Returns a plain string description of the players "inventory"
+    */
     get decription(){
         console.log(this.inventory);
         var desc = "You have:\n";
@@ -71,6 +93,10 @@ class Resource_Manager{
         return desc;
     }
 
+    /*
+    returns a plain string description of the players "inventory" in html format
+    for the resource-display div
+    */
     get htmlDescription(){
         var desc = "";
         for(var key in this.inventory){
@@ -84,15 +110,33 @@ class Resource_Manager{
 
 export {Resource_Manager, items}
 
-// console.log("Start Resource Manager Test");
-// var rm = new Resource_Manager();
+var test = true;
 
-// rm.addItem(items.WATER, 11);
-// rm.addItem(items.FOOD, 20);
-// rm.addItem(items.ION_BATTERIES, 3);
-// rm.addItem(items.WIRING, 3);
+if(test){
 
-// rm.removeItem(items.FOOD, 20);
-// rm.removeItem(items.WATER, 1);
+    console.log("%cStart Resource Manager Test", "color:green");
 
-// rm.decription;
+    var _ResourceManager = new Resource_Manager();
+    
+    //just an example of how to add items to the resource manager
+    _ResourceManager.addItem(items.SCRAP_METAL, 82); //how to add items (item, amount)
+    _ResourceManager.addItem(items.WIRING, 38);
+    
+    //example of removing an item (returns bool)
+    _ResourceManager.removeItem(items.REFINED_STEEL, 1); //how to remove items (item, amount) returns true if successful
+    
+    if(_ResourceManager.removeItem(items.ALIEN_GUTS, 10000)){ //showing how to use item removal with if statment
+        console.log("item removal succ");
+    }
+    else{
+        console.log("item removal failed");
+    }
+    
+    //temp script to replace the "resource display info" (this will belong in some sort of update display loop later)
+    document.getElementById("resource-display").innerHTML = _ResourceManager.htmlDescription;
+    
+    console.log("Water: " + _ResourceManager.getItemCount(items.WATER));
+
+    console.log("%cEnd of Resource manager Test", "color:red");
+
+}
