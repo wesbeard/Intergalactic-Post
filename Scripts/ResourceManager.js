@@ -1,6 +1,7 @@
 const items = {
     FOOD: "Food",
     WATER: "Water",
+    AIR: "Air",
     MECHANICAL_PARTS: "Mechanical parts",
     CIRCUT_BOARDS: "Circuit Boards",
     WIRING: "Wiring",
@@ -122,7 +123,7 @@ class Resource_Manager{
 
 export {Resource_Manager, items}
 
-var test = true;
+var test = false;
 
 if(test){
 
