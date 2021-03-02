@@ -1,5 +1,4 @@
-import {Resource_Manager} from "./ResourceManager.js";
-import {items} from "./ResourceManager.js";
+import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js"
 
 var _ResourceManager = new Resource_Manager();

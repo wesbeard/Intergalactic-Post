@@ -110,7 +110,7 @@ class Resource_Manager{
 
 export {Resource_Manager, items}
 
-var test = true;
+var test = false;
 
 if(test){
 
