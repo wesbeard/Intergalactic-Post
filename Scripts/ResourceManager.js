@@ -106,11 +106,16 @@ class Resource_Manager{
     */
     get htmlDescription(){
         var desc = "";
-        for(var key in this.inventory){
-            var value = this.inventory[key];
-            desc += "<p class='resource'>" + key + ": " + value + "</p>";
+        if(Object.keys(this.inventory).length == 0){
+            return '<p class="resource RedText">~INVENTORY EMPTY~</p>';
         }
-        return desc;
+        else{
+            for(var key in this.inventory){
+                var value = this.inventory[key];
+                desc += "<p class='resource'>" + key + ": " + value + "</p>";
+            }
+            return desc;
+        }
     }
 
 }
