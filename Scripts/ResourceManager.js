@@ -79,6 +79,13 @@ class Resource_Manager{
     }
 
     /*
+    Completely removes an item from the inventory
+    */
+    deleteItem(item){
+        delete this.inventory[item];
+    }
+
+    /*
     Returns a plain string description of the players "inventory"
     */
     get decription(){
@@ -110,7 +117,7 @@ class Resource_Manager{
 
 export {Resource_Manager, items}
 
-var test = false;
+var test = true;
 
 if(test){
 
@@ -121,6 +128,7 @@ if(test){
     //just an example of how to add items to the resource manager
     _ResourceManager.addItem(items.SCRAP_METAL, 82); //how to add items (item, amount)
     _ResourceManager.addItem(items.WIRING, 38);
+    _ResourceManager.addItem(items.FOOD, 21);
     
     //example of removing an item (returns bool)
     _ResourceManager.removeItem(items.REFINED_STEEL, 1); //how to remove items (item, amount) returns true if successful
@@ -132,10 +140,11 @@ if(test){
         console.log("item removal failed");
     }
     
+    console.log("Water: " + _ResourceManager.getItemCount(items.WATER));
+    _ResourceManager.deleteItem(items.SCRAP_METAL);
+
     //temp script to replace the "resource display info" (this will belong in some sort of update display loop later)
     document.getElementById("resource-display").innerHTML = _ResourceManager.htmlDescription;
-    
-    console.log("Water: " + _ResourceManager.getItemCount(items.WATER));
 
     console.log("%cEnd of Resource manager Test", "color:red");
 
