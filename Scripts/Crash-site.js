@@ -1,4 +1,4 @@
-import {addTextItem, addEventButton, setArtwork} from "./scripts.js"
+import {addTextItem, addEventButton, setArtwork} from "./DisplayManager.js"
 import {asciiCrash} from "./ASCII-Art.js"
 
 class Crash_Site {

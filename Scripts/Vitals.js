@@ -17,12 +17,12 @@ class Vitals{
 
     constructor(rm){
         if(rm instanceof Resource_Manager){
-            this.ResourceManager = Resource_Manager(rm);
+            this.rm = rm;
         }
         else{
             console.log("vitals was not given a resource manager");
         }
-        this.wounded = true;
+        this.wounded = false;
         this.currentCondition = conditions.CRITICAL;
     }
 
@@ -32,13 +32,13 @@ class Vitals{
         var hungery = false;
         var aired = false;
         
-        if(rm.getItemCount(items.AIR) <= LIMIT){
+        if(this.rm.getItemCount(items.AIR) <= LIMIT){
             aired = true;
         }
-        if(rm.getItemCount(items.WATER) <= LIMIT){
+        if(this.rm.getItemCount(items.WATER) <= LIMIT){
             thirsty = true;
         }
-        if(rm.getItemCount(items.FOOD) <= LIMIT){
+        if(this.rm.getItemCount(items.FOOD) <= LIMIT){
             hungery = true;
         }
 
@@ -69,4 +69,50 @@ class Vitals{
 
     }
 
+    getCondition(){
+        this.currentCondition = this.checkCondition;
+        if(this.currentCondition != conditions.HEALTHY){
+            return "<p class='vital-category flash-red'>Status: " + this.currentCondition + "</p>";
+        }
+        else{
+            return "<p class='vital-category'>Status: " + this.currentCondition + "</p>"
+        }
+    }
+
+    getAir(){
+        var count = this.rm.getItemCount(items.AIR);
+        var classes = "vital-category ";
+        if(count <= LIMIT){
+            classes += "flash-red"
+        }
+
+        return "<p class='"+classes+"'>Air: " + count + "/100</p>";
+    }
+
+    getFood(){
+        var count = this.rm.getItemCount(items.FOOD);
+        var classes = "vital-category ";
+        if(count <= LIMIT){
+            classes += "flash-red"
+        }
+
+        return "<p class='"+classes+"'>Food: " + count + "/100</p>";
+    }
+
+    getWater(){
+        var count = this.rm.getItemCount(items.WATER);
+        var classes = "vital-category ";
+        if(count <= LIMIT){
+            classes += "flash-red"
+        }
+
+        return "<p class='"+classes+"'>Water: " + count + "/100</p>";
+    }
+
+    setWounded(wounded){
+        this.wounded = wounded;
+    }
+
 }
+
+export {Vitals}
