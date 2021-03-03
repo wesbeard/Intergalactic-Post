@@ -7,10 +7,20 @@ var _CrashSite = new Crash_Site;
 var currentLocation;
 
 var content = document.getElementById("page-content");
-    toggleHideUI(content);
 
+// Uncomment to run devSequence
+//devSequence();
+// Dev sequence with all UI shown and little fading
+function devSequence() {
+    _CrashSite.loadLocation();
+    currentLocation = _CrashSite;
+    var content = document.getElementById("page-content");
+    fadeIn(content, 0);
+}
+
+// Uncomment to run testSequence
 testSequence();
-
+// Sequence with title, slower timing, and hidden UI
 function testSequence() {
 
     // Hide main page content
@@ -18,6 +28,8 @@ function testSequence() {
     toggleHideUI(content);
     // Set the title text equal to the ASCII art title screen, fade out after 3 seconds
     setTitleText(asciiTitle);
+    var titleDiv = document.getElementById("title");
+    fadeIn(titleDiv, 30);
     setTimeout(fadeOut, 3000, title, 30);
     // Hide unused UI elements
     var buttons = document.getElementById("buttons");
@@ -40,8 +52,6 @@ function progressLocation() {
 // Set the title text, can be used for main title as well as day changes
 function setTitleText(text) {
     document.getElementById("title-text").innerHTML = text;
-    var titleDiv = document.getElementById("title");
-    fadeIn(titleDiv, 30);
 }
 
 // Add a text item to the text display
@@ -70,10 +80,10 @@ function addEventButton(buttonText) {
 }
 
 // Fade in items in the text display one by one
-function fadeInTextDisplay() {
+function fadeInTextDisplay(multiplier) {
     var textDisplayContents = document.getElementById("text-display").children;
     for (var i = 0; i < textDisplayContents.length; i++) {
-        setTimeout(fadeIn, i * 1500, textDisplayContents[i], 10);
+        setTimeout(fadeIn, i * multiplier, textDisplayContents[i], 10);
     }
 }
 

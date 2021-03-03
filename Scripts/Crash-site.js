@@ -13,7 +13,7 @@ class Crash_Site {
         this.setText();
         this.setEventButtons();
         this.setLocationArtwork();
-        setTimeout(fadeInTextDisplay, 5000);
+        setTimeout(fadeInTextDisplay, 5000, 1500);
         this.stage++;
     }
     
@@ -67,7 +67,7 @@ class Crash_Site {
                 addEventButton("Look for the mail");
                 break;
             case 2:
-                addEventButton("Locate essential life support");
+                addEventButton("Assess life support");
                 break;
         }
         
