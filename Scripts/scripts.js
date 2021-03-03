@@ -1,10 +1,15 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
+import {Display_Manager} from "./DisplayManager.js";
+import {Vitals} from "./Vitals.js";
 
 var _ResourceManager = new Resource_Manager();
 var _CrashSite = new Crash_Site;
+var _Vitals = new Vitals(_ResourceManager);
+var _DisplayManager = new Display_Manager();
 var currentLocation;
+
 
 var content = document.getElementById("page-content");
 
@@ -160,5 +165,12 @@ function fadeIn(element, duration) {
         op += op * 0.1;
     }, duration);
 }
+
+_ResourceManager.addItem(items.AIR, 98);
+_ResourceManager.addItem(items.WATER, 33);
+_ResourceManager.addItem(items.FOOD, 50);
+
+_DisplayManager.updateVitals(_ResourceManager, _Vitals);
+_DisplayManager.updateInventory(_ResourceManager);
 
 export {addTextItem, addEventButton, setArtwork, toggleHideUI, fadeInTextDisplay, clearTextDisplay};
