@@ -23,7 +23,7 @@ class Crash_Site {
         clearTextDisplay();
         this.setText();
         this.setEventButtons();
-        fadeInTextDisplay();
+        fadeInTextDisplay(1500);
         this.stage++;
     }
 
