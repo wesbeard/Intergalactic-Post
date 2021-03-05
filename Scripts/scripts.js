@@ -14,10 +14,10 @@ var currentLocation;
 var content = document.getElementById("page-content");
 
 // Uncomment to run devSequence
-devSequence();
+//devSequence();
 
 // Uncomment to run testSequence
-//testSequence();
+prodSequence();
 
 // Dev sequence with all UI shown and little fading
 function devSequence() {
@@ -35,7 +35,7 @@ function devSequence() {
 
 
 // Sequence with title, slower timing, and hidden UI
-function testSequence() {
+function prodSequence() {
 
     // Hide main page content
     var content = document.getElementById("page-content");
@@ -60,7 +60,7 @@ function testSequence() {
 
 // WIP: progress the current locations text display
 function progressLocation() {
-    currentLocation.progress(0);
+    currentLocation.progress();
 }
 
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
