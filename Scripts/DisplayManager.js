@@ -1,5 +1,10 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
+import {Vitals} from "./Vitals.js";
 class Display_Manager{
+
+    static vrm;
+    static vv;
+
     constructor(){
         this.textDisplay = document.getElementById("text-display");
         this.buttons = document.getElementById("buttons");
@@ -15,13 +20,17 @@ class Display_Manager{
         this.titleText.innerHTML = text;
     }
 
+    setStaticVitals(rm){
+        Display_Manager.vrm = rm;
+        Display_Manager.vv = new Vitals(rm);
+    }
+
     //will update the vitals card to the most current condition
-    updateVitals(rm, vitals){
-        var newVitals = vitals.getCondition() + vitals.getAir() + vitals.getWater() +
-        vitals.getFood();
+    updateVitals(){
+        var newVitals = Display_Manager.vv.getCondition() + Display_Manager.vv.getAir() + Display_Manager.vv.getWater() +
+        Display_Manager.vv.getFood();
 
         this.vitals.innerHTML = newVitals;
-
     }
 
     updateInventory(rm){
