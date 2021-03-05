@@ -72,7 +72,7 @@ class Display_Manager{
 
     // Fade in items in the text display one by one
     fadeInTextDisplay(multiplier) {
-
+        this.textDisplay = document.getElementById("text-display");
         var textDisplayContents = this.textDisplay.children;
 
         for (var i = 0; i < textDisplayContents.length; i++) {
@@ -83,11 +83,11 @@ class Display_Manager{
 } //END OF DISPLAY MANAGER
 
 function hideElement(element) {
-    element.style.visibility= "hidden";
+    element.style.visibility = "hidden";
 }
 
 function showElement(element) {
-    element.style.visbility = "visible";
+    element.style.visibility = "visible";
 }
 
 // Toggle the visibility of the given parent element
@@ -117,6 +117,7 @@ function fadeIn(element, duration) {
     var op = 0.1;
     var timer = setInterval(function () {
         element.style.display = 'flex';
+        element.style.visibility = 'visible';
         if (op >= 1){
             clearInterval(timer);
         }

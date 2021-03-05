@@ -14,14 +14,20 @@ var currentLocation;
 var content = document.getElementById("page-content");
 
 // Uncomment to run devSequence
-//devSequence();
+devSequence();
 
 // Uncomment to run testSequence
-testSequence();
+//testSequence();
 
 // Dev sequence with all UI shown and little fading
 function devSequence() {
-    _CrashSite.loadLocation();
+    var buttons = document.getElementById("buttons");
+    hideElement(buttons);
+    var resources = document.getElementById("resource-display");
+    hideElement(resources);
+    var vitals = document.getElementById("vitals");
+    hideElement(vitals);
+    _CrashSite.loadLocation(0, 0);
     currentLocation = _CrashSite;
     var content = document.getElementById("page-content");
     fadeIn(content, 0);
@@ -47,19 +53,19 @@ function testSequence() {
     var vitals = document.getElementById("vitals");
     hideElement(vitals);
     // Load content and start fading in
-    _CrashSite.loadLocation();
+    _CrashSite.loadLocation(4000, 1000);
     currentLocation = _CrashSite;
-    setTimeout(fadeIn, 4000, content, 30);
+    setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display
 function progressLocation() {
-    currentLocation.progress();
+    currentLocation.progress(0);
 }
 
-_ResourceManager.addItem(items.AIR, 98);
-_ResourceManager.addItem(items.WATER, 33);
-_ResourceManager.addItem(items.FOOD, 50);
+_ResourceManager.addItem(items.SCRAP_METAL, 5);
+_ResourceManager.addItem(items.WIRING, 1);
+_ResourceManager.addItem(items.MECHANICAL_PARTS, 0);
 
 _DisplayManager.updateVitals(_ResourceManager, _Vitals);
 _DisplayManager.updateInventory(_ResourceManager);
