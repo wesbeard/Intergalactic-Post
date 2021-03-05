@@ -65,7 +65,11 @@ function progressLocation() {
 
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
-_ResourceManager.addItem(items.MECHANICAL_PARTS, 0);
+_ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
+
+_ResourceManager.addItem(items.FOOD,15);
+_ResourceManager.addItem(items.WATER, 20);
+_ResourceManager.addItem(items.AIR, 18);
 
 _DisplayManager.updateVitals(_ResourceManager, _Vitals);
 _DisplayManager.updateInventory(_ResourceManager);
