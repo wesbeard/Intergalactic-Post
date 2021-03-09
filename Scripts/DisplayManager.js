@@ -18,9 +18,9 @@ class Display_Manager{
         var content = document.getElementById("page-content");
         toggleHideUI(content);
         // Set title text
-        this.titleText = document.getElementById("title-text");
-        this.titleText.style.fontSize = fontSize;
-        this.titleText.innerHTML = text;
+        Display_Manager.titleText = document.getElementById("title-text");
+        Display_Manager.titleText.style.fontSize = fontSize;
+        Display_Manager.titleText.innerHTML = text;
         // fade in title
         fadeIn(title, 20);
         // Schedule fadeout for 3 seconds later
