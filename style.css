@@ -74,6 +74,9 @@ button:hover {
     width: 15vw;
     margin: auto;
     margin-top: 1vh;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 #ascii-art {
@@ -82,4 +85,18 @@ button:hover {
     height: auto;
     position: fixed;
     bottom: 0px;
+}
+
+.ascii-button {
+    cursor: pointer;
+}
+
+#resource-display {
+    width: 25vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    padding-left: 2em;
+    line-height: 0;
 }

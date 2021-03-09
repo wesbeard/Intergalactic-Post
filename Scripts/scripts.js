@@ -34,7 +34,6 @@ function devSequence() {
     fadeIn(content, 0);
 }
 
-
 // Sequence with title, slower timing, and hidden UI
 function prodSequence() {
     // Display the title text ASCII art as the title screen text, fades out after 3 seconds
