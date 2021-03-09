@@ -93,6 +93,7 @@ button:hover {
     margin-top: 1vh;
     text-align: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 #ascii-art {
@@ -101,6 +102,10 @@ button:hover {
     height: auto;
     position: fixed;
     bottom: 0px;
+}
+
+.ascii-button {
+    cursor: pointer;
 }
 
 #resource-display {
