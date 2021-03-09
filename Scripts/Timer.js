@@ -1,4 +1,5 @@
-import {GameEvent} from "./GameEvent.js";
+import { Display_Manager } from "./DisplayManager.js";
+import {GameEvent} from "./GameEvents.js";
 
 class GameTimer
 {
@@ -21,13 +22,9 @@ class GameTimer
             GameEvent.decrimentTick();
         })
 
-        this.UpdateDisplay();
+        Display_Manager.updateDisplay();
     }
 
-    UpdateDisplay()
-    {
-        //UpdateDisplay based on events
-    }
 }
 
 export {GameTimer, TimerLoop, UpdateDisplay}
