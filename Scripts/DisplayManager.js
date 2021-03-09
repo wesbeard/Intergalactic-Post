@@ -1,8 +1,6 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 class Display_Manager{
-
-<<<<<<< HEAD
     static vrm;
     static vv;
 
@@ -30,22 +28,6 @@ class Display_Manager{
         fadeIn(title, 20);
         // Schedule fadeout for 3 seconds later
         setTimeout(fadeOut, 2000, title, 20);
-=======
-    static _VitalsResourceManager;
-    static _PlayerVitals;
-
-    static textDisplay = document.getElementById("text-display");
-    static buttons = document.getElementById("buttons");
-    static vitals = document.getElementById("vitals");
-    static centerColumn = document.getElementById("center-column");
-    static asciiArt = document.getElementById("ascii-art");
-    static resourceDisplay = document.getElementById("resource-display");
-    static titleText = document.getElementById("title-text");
-
-    // Set the title text, can be used for main title as well as day changes
-    setTitleText(text) {
-        Display_Manager.titleText.innerHTML = text;
->>>>>>> 5713f9add02e4d4af845c82f2303a27eea651db1
     }
 
     setStaticVitals(rm){
