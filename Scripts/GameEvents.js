@@ -43,7 +43,7 @@ class GiveItemEvent extends GameEvent{
 
     executeEvent(){
         this.resourceManager.addItem(this.item, this.amount);
-        //remove event from timer
+        GameTimer.RemoveEvent(this);
     }
 }
 
