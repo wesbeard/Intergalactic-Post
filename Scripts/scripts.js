@@ -2,15 +2,21 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
 import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js";
+import {GameTimer} from "./Timer.js";
+import {GameEvent} from "./GameEvents.js";
 
 
-var _ResourceManager = new Resource_Manager();
+var _ResourceManager = new Resource_Manager(); //ship resources
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
-var currentLocation;
-var _PlayerResources = new Resource_Manager();
+var _PlayerResources = new Resource_Manager(); //player resources
+var _Timer = new GameTimer();
 
+var currentLocation;
 _DisplayManager.setStaticVitals(_PlayerResources);
+_DisplayManager.setStaticResources(_ResourceManager);
+
+setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
 var content = document.getElementById("page-content");
 
@@ -58,7 +64,6 @@ function prodSequence() {
 function progressLocation() {
     currentLocation.progress(2000);
 }
-
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
@@ -67,7 +72,9 @@ _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);
 _PlayerResources.addItem(items.AIR, 18);
 
-_DisplayManager.updateVitals();
-_DisplayManager.updateInventory(_ResourceManager);
+
+
+var ge = new GameEvent(5);
+GameTimer.AddEvent(ge);
 
 export {progressLocation}

@@ -1,4 +1,5 @@
 import {items, Resource_Manager} from "./ResourceManager.js";
+import { GameTimer } from "./Timer.js";
 
 class GameEvent
 {
@@ -20,6 +21,7 @@ class GameEvent
     executeEvent()
     {
         console.log("Executing Event");
+        GameTimer.RemoveEvent(this);
     }
 }
 
@@ -37,4 +39,4 @@ class GiveItemEvent extends GameEvent{
     }
 }
 
-export{GameEvent}
+export{GameEvent, GiveItemEvent}
