@@ -7,46 +7,30 @@ html {
     height: 100vh;
 }
 
-#page-content {
-    display: flex;
-    flex-direction: row;
-}
-
-#title {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-}
-
-#title pre {
-    margin-top: 25vh;
-    justify-content: center;
-    font-size: .7vw;
-    line-height: normal;
-}
-
 button {
     margin: .5em;
     padding: .3em;
     font-size: 12pt;
     font-family: 'Courier New', Courier, monospace;
     font-size:2vh;
-    text-align: center;
-    justify-content: center;
 }
 
 button:hover {
     cursor: pointer;
 }
 
+#page-content {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+}
+
 #buttons {
     width: 25vw;
-    height: 70vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 1em;
-    padding-right: 2em;
 }
 
 .action-button {
@@ -84,15 +68,12 @@ button:hover {
     text-align: center;
     margin-top: .5vh;
     margin-bottom: .5vh;
-    white-space: nowrap;
 }
 
 .event-button {
     width: 15vw;
     margin: auto;
     margin-top: 1vh;
-    text-align: center;
-    justify-content: center;
 }
 
 #ascii-art {
@@ -101,18 +82,4 @@ button:hover {
     height: auto;
     position: fixed;
     bottom: 0px;
-}
-
-#resource-display {
-    width: 25vw;
-    height: 70vh;
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
-    padding-left: 2em;
-    line-height: 0;
-}
-
-.RedText{
-    color:red;
 }
