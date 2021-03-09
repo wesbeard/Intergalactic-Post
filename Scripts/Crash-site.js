@@ -13,20 +13,31 @@ class Crash_Site {
         this.DM = new Display_Manager();
     }
 
-    loadLocation() {
+    loadLocation(fadeDelay = 4000, fadeMultiplier = 1000) {
         this.setText();
         this.setEventButtons();
         this.setLocationArtwork();
-        this.DM.fadeInTextDisplay(1500);
+        setTimeout(this.DM.fadeInTextDisplay, fadeDelay, fadeMultiplier);
         this.stage++;
     }
     
-    progress() {
+    progress(fadeMultiplier = 1000) {
         
         this.DM.clearTextDisplay();
         this.setText();
         this.setEventButtons();
-        this.DM.fadeInTextDisplay(1000);
+        this.DM.fadeInTextDisplay(fadeMultiplier);
+
+        switch (this.stage) {
+            case 4:
+                fadeIn(document.getElementById("vitals"), 30);
+                break;
+            case 5:
+                fadeIn(document.getElementById("buttons"), 30);
+                fadeIn(document.getElementById("resource-display"), 30);
+                break;
+        }
+
         this.stage++;
     }
 
@@ -60,32 +71,73 @@ class Crash_Site {
                 this.DM.addTextItem("as well as the hydrolyzer for water generation,");
                 this.DM.addTextItem("they are essential to your survival");
                 this.DM.addTextItem("and may need to be repaired\"");
-                this.DM.addTextItem("\"We are also running on emergency battery power...\"");
                 this.DM.addTextItem("I'm screwed", true);
                 break;
             case 3:
-                this.DM.addTextItem("Guess I should scavenge");
+                this.DM.addTextItem("The back of the ship is a wreck");
+                this.DM.addTextItem("I have no idea how I'll find anything");
+                this.DM.addTextItem("The good news is that there are piles of letters...");
+                this.DM.addTextItem("So at least some of the mail survived");
+                this.DM.addTextItem("Thank god");
+                this.DM.addTextItem("Heading to the starboard cabin you locate the oxygenator", true);
+                this.DM.addTextItem("It's working, but very slowly", true);
+                this.DM.addTextItem("Should be enough to keep me alive for another few hours at least...");
+                this.DM.addTextItem("On the opposite side of the ship you find the hydrolyzer", true);
+                this.DM.addTextItem("Oh no");
+                this.DM.addTextItem("It may be functional but the tank was ruptured in the crash");
+                this.DM.addTextItem("That's why it's so damn wet back here", true);
+                this.DM.addTextItem("The leak will need to be patched before I can see if it's operational");
+                this.DM.addTextItem("But at least I've got an idea of when I'll die");
+                this.DM.addTextItem("It's a little later than I thought");
+                break;
+            case 4:
+                this.DM.addTextItem("You find automation robots");
+                break;
+            case 5:
+                this.DM.addTextItem("!WIP! automation gameplay starts now");
                 break;
         }
     }
 
     setEventButtons() {
+        var button;
+        var b1;
+        var b2;
+        var b3;
         switch (this.stage) {
             case 1:
-                var button = this.DM.addEventButton("Look for the mail");
-                button.addEventListener("click", progressLocation, false);
+                button = this.DM.addEventButton("Look for the mail");
                 break;
             case 2:
-                var button = this.DM.addEventButton("Assess life support");
-                button.addEventListener("click", progressLocation, false);
+                button = this.DM.addEventButton("Assess life support");
                 break;
             case 3:
-                var b1String = "b1";
-                var b1 = this.DM.addEventButton("Scavenge for metal");
-                b1.addEventListener("click", clickAccumulate(b1String));
+                button = this.DM.addEventButton("Find a solution");
+                break;
+            case 4:
+                button = this.DM.addEventButton("Start automating");
+                break;
+            case 5:
+                b1 = this.DM.addEventButton("Scavenge for metal");
+                b2 = this.DM.addEventButton("Scavenge for wiring");
+                b3 = this.DM.addEventButton("Scavenge for mechanical parts")
                 break;
         }
-        
+        if (button != undefined) {
+            button.addEventListener("click", progressLocation, false);
+        }
+        if (b1 != undefined) {
+            var b1String = "b1";
+            b1.addEventListener("click", clickAccumulate(b1String));
+        }
+        if (b2 != undefined) {
+            var b2String = "b2";
+            b2.addEventListener("click", clickAccumulate(b2String));
+        }
+        if (b3 != undefined) {
+            var b3String = "b3";
+            b3.addEventListener("click", clickAccumulate(b3String));
+        }
     }
 
     setLocationArtwork() {

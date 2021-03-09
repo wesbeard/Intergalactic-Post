@@ -35,7 +35,11 @@ class Resource_Manager{
     Adds item(s) to the inventory
     */
     addItem(item, count){
-        if(this.inventory[item] != null)
+        
+        if(count <= 0){
+            console.log("%cYou cant add " + count, "color='red'");
+        }
+        else if(this.inventory[item] != null)
         {
             this.inventory[item] += count;
             console.log("you have added " + count + " " + item + " to your inventory. TOTAL: " + this.inventory[item]);
