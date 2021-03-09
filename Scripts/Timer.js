@@ -1,5 +1,5 @@
 import { Display_Manager } from "./DisplayManager.js";
-import {GameEvent} from "./GameEvent.js";
+import {GameEvent} from "./GameEvents.js";
 
 class GameTimer
 {
