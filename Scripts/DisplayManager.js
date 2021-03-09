@@ -2,6 +2,7 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 class Display_Manager{
 
+<<<<<<< HEAD
     static vrm;
     static vv;
 
@@ -29,23 +30,39 @@ class Display_Manager{
         fadeIn(title, 20);
         // Schedule fadeout for 3 seconds later
         setTimeout(fadeOut, 2000, title, 20);
+=======
+    static _VitalsResourceManager;
+    static _PlayerVitals;
+
+    static textDisplay = document.getElementById("text-display");
+    static buttons = document.getElementById("buttons");
+    static vitals = document.getElementById("vitals");
+    static centerColumn = document.getElementById("center-column");
+    static asciiArt = document.getElementById("ascii-art");
+    static resourceDisplay = document.getElementById("resource-display");
+    static titleText = document.getElementById("title-text");
+
+    // Set the title text, can be used for main title as well as day changes
+    setTitleText(text) {
+        Display_Manager.titleText.innerHTML = text;
+>>>>>>> 5713f9add02e4d4af845c82f2303a27eea651db1
     }
 
     setStaticVitals(rm){
-        Display_Manager.vrm = rm;
-        Display_Manager.vv = new Vitals(rm);
+        Display_Manager._VitalsResourceManager = rm;
+        Display_Manager._PlayerVitals = new Vitals(rm);
     }
 
     //will update the vitals card to the most current condition
     updateVitals(){
-        var newVitals = Display_Manager.vv.getCondition() + Display_Manager.vv.getAir() + Display_Manager.vv.getWater() +
-        Display_Manager.vv.getFood();
+        var newVitals = Display_Manager._PlayerVitals.getCondition() + Display_Manager._PlayerVitals.getAir() + Display_Manager._PlayerVitals.getWater() +
+        Display_Manager._PlayerVitals.getFood();
 
-        this.vitals.innerHTML = newVitals;
+        Display_Manager.vitals.innerHTML = newVitals;
     }
 
     updateInventory(rm){
-        this.resourceDisplay.innerHTML = rm.htmlDescription;
+        Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
     }
 
     // Set the current ASCII artwork
@@ -53,7 +70,7 @@ class Display_Manager{
         var pre = document.createElement("pre");
         pre.setAttribute("class", "art-piece");
         pre.textContent = art;
-        this.asciiArt.appendChild(pre);
+        Display_Manager.asciiArt.appendChild(pre);
     }
 
     // Add a text item to the text display
@@ -66,7 +83,7 @@ class Display_Manager{
             textBox.style.fontStyle = "italic";
         }
         textBox.style.display = "none";
-        this.textDisplay.appendChild(textBox);
+        Display_Manager.textDisplay.appendChild(textBox);
     }
 
     // Add a button to the text display
@@ -79,14 +96,14 @@ class Display_Manager{
 
         button.innerHTML = buttonText;
         button.style.display = "none";
-        this.textDisplay.appendChild(button);
+        Display_Manager.textDisplay.appendChild(button);
         return button;
     }
 
     // Nuke all items in the text display div
     clearTextDisplay() {
-        while (this.textDisplay.firstChild) {
-        this.textDisplay.removeChild(this.textDisplay.firstChild);
+        while (Display_Manager.textDisplay.firstChild) {
+        Display_Manager.textDisplay.removeChild(Display_Manager.textDisplay.firstChild);
         }
     }
 
