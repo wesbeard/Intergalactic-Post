@@ -1,3 +1,4 @@
+import {Display_Manager} from "./DisplayManager.js";
 import {Resource_Manager} from "./ResourceManager.js";
 import {items} from "./ResourceManager.js";
 
@@ -6,10 +7,9 @@ var i = 0;
 var j = 0;
 var k = 0;
 // Add item to player inventory per click
-function clickAccumulate(obj) {
-   var id = obj.id;
-   switch(id) {
-       case 'metal-gather':
+function clickAccumulate(name) {
+   switch(name) {
+       case 'b1':
            i++;
            alert(i);
            break;

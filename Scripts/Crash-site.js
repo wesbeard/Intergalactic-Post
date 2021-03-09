@@ -4,6 +4,7 @@ import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI
 import {progressLocation} from './scripts.js';
 
 import {asciiCrash} from "./ASCII-Art.js"
+import { clickAccumulate } from "./gameplay.js";
 
 class Crash_Site {
 
@@ -62,6 +63,9 @@ class Crash_Site {
                 this.DM.addTextItem("\"We are also running on emergency battery power...\"");
                 this.DM.addTextItem("I'm screwed", true);
                 break;
+            case 3:
+                this.DM.addTextItem("Guess I should scavenge");
+                break;
         }
     }
 
@@ -74,6 +78,11 @@ class Crash_Site {
             case 2:
                 var button = this.DM.addEventButton("Assess life support");
                 button.addEventListener("click", progressLocation, false);
+                break;
+            case 3:
+                var b1String = "b1";
+                var b1 = this.DM.addEventButton("Scavenge for metal");
+                b1.addEventListener("click", clickAccumulate(b1String));
                 break;
         }
         
