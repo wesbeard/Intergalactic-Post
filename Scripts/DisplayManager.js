@@ -1,19 +1,16 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 class Display_Manager{
-    static vrm;
-    static vv;
+    static _VitalsResourceManager;
+    static _PlayerVitals;
 
-    constructor(){
-        this.textDisplay = document.getElementById("text-display");
-        this.buttons = document.getElementById("buttons");
-        this.vitals = document.getElementById("vitals");
-        this.centerColumn = document.getElementById("center-column");
-        this.asciiArt = document.getElementById("ascii-art");
-        this.resourceDisplay = document.getElementById("resource-display");
-        this.titleText = document.getElementById("title-text");
-        this.title = document.getElementById("title");
-    }
+    static textDisplay = document.getElementById("text-display");
+    static buttons = document.getElementById("buttons");
+    static vitals = document.getElementById("vitals");
+    static centerColumn = document.getElementById("center-column");
+    static asciiArt = document.getElementById("ascii-art");
+    static resourceDisplay = document.getElementById("resource-display");
+    static titleText = document.getElementById("title-text");
 
     // Set the title text, can be used for main title as well as day changes
     displayTitleText(text, fontSize = ".7vw") {
@@ -94,8 +91,7 @@ class Display_Manager{
         this.ascii = document.getElementById("ascii-art");
         if (this.ascii.style.visibility == "hidden")
             fadeIn(ascii, 30);
-        this.textDisplay = document.getElementById("text-display");
-        var textDisplayContents = this.textDisplay.children;
+        var textDisplayContents = Display_Manager.textDisplay.children;
 
         for (var i = 0; i < textDisplayContents.length; i++) {
             setTimeout(fadeIn, i * multiplier, textDisplayContents[i], 10);

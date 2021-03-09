@@ -50,7 +50,7 @@ function prodSequence() {
     var ascii = document.getElementById("ascii-art");
     hideElement(ascii);
     // Load content and start fading in
-    _CrashSite.loadLocation(7000, 2000);
+    _CrashSite.loadLocation(6000, 2000);
     currentLocation = _CrashSite;
     setTimeout(fadeIn, 3000, content, 30);
 }
