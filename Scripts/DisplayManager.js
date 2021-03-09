@@ -32,15 +32,20 @@ class Display_Manager{
         Display_Manager._PlayerVitals = new Vitals(rm);
     }
 
+    static updateDisplay(){
+        Display_Manager.updateInventory();
+        Display_Manager.updateVitals();
+    }
+
     //will update the vitals card to the most current condition
-    updateVitals(){
+    static updateVitals(){
         var newVitals = Display_Manager._PlayerVitals.getCondition() + Display_Manager._PlayerVitals.getAir() + Display_Manager._PlayerVitals.getWater() +
         Display_Manager._PlayerVitals.getFood();
 
         Display_Manager.vitals.innerHTML = newVitals;
     }
 
-    updateInventory(rm){
+    static updateInventory(rm){
         Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
     }
 
