@@ -1,3 +1,4 @@
+
 class GameEvent
 {
     constructor(maxTicks)
@@ -17,7 +18,7 @@ class GameEvent
 
     executeEvent()
     {
-        //EXECUTE EVENT
+        console.log("Executing Event");
     }
 }
 
