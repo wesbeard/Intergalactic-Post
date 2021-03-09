@@ -17,7 +17,7 @@ var content = document.getElementById("page-content");
 // Uncomment to run devSequence
 //devSequence();
 
-// Uncomment to run testSequence
+// Uncomment to run prodSequence
 prodSequence();
 
 // Dev sequence with all UI shown and little fading
@@ -37,15 +37,9 @@ function devSequence() {
 
 // Sequence with title, slower timing, and hidden UI
 function prodSequence() {
-
-    // Hide main page content
-    var content = document.getElementById("page-content");
-    toggleHideUI(content);
-    // Set the title text equal to the ASCII art title screen, fade out after 3 seconds
-    _DisplayManager.setTitleText(asciiTitle);
-    var titleDiv = document.getElementById("title");
-    fadeIn(titleDiv, 30);
-    setTimeout(fadeOut, 3000, title, 30);
+    // Display the title text ASCII art as the title screen text, fades out after 3 seconds
+    _DisplayManager.displayTitleText(asciiTitle);
+    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "5vh");
     // Hide unused UI elements
     var buttons = document.getElementById("buttons");
     hideElement(buttons);
@@ -53,15 +47,17 @@ function prodSequence() {
     hideElement(resources);
     var vitals = document.getElementById("vitals");
     hideElement(vitals);
+    var ascii = document.getElementById("ascii-art");
+    hideElement(ascii);
     // Load content and start fading in
-    _CrashSite.loadLocation(4000, 1000);
+    _CrashSite.loadLocation(7000, 2000);
     currentLocation = _CrashSite;
     setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display
 function progressLocation() {
-    currentLocation.progress();
+    currentLocation.progress(2000);
 }
 
 _ResourceManager.addItem(items.SCRAP_METAL, 5);

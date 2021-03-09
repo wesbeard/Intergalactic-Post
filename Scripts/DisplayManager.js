@@ -13,11 +13,22 @@ class Display_Manager{
         this.asciiArt = document.getElementById("ascii-art");
         this.resourceDisplay = document.getElementById("resource-display");
         this.titleText = document.getElementById("title-text");
+        this.title = document.getElementById("title");
     }
 
     // Set the title text, can be used for main title as well as day changes
-    setTitleText(text) {
+    displayTitleText(text, fontSize = ".7vw") {
+        // Hide main page content
+        var content = document.getElementById("page-content");
+        toggleHideUI(content);
+        // Set title text
+        this.titleText = document.getElementById("title-text");
+        this.titleText.style.fontSize = fontSize;
         this.titleText.innerHTML = text;
+        // fade in title
+        fadeIn(title, 20);
+        // Schedule fadeout for 3 seconds later
+        setTimeout(fadeOut, 2000, title, 20);
     }
 
     setStaticVitals(rm){
@@ -81,6 +92,9 @@ class Display_Manager{
 
     // Fade in items in the text display one by one
     fadeInTextDisplay(multiplier) {
+        this.ascii = document.getElementById("ascii-art");
+        if (this.ascii.style.visibility == "hidden")
+            fadeIn(ascii, 30);
         this.textDisplay = document.getElementById("text-display");
         var textDisplayContents = this.textDisplay.children;
 
