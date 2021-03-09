@@ -3,6 +3,7 @@ import {Vitals} from "./Vitals.js";
 class Display_Manager{
     static _VitalsResourceManager;
     static _PlayerVitals;
+    static _ShipResources;
 
     static textDisplay = document.getElementById("text-display");
     static buttons = document.getElementById("buttons");
@@ -32,8 +33,12 @@ class Display_Manager{
         Display_Manager._PlayerVitals = new Vitals(rm);
     }
 
+    setStaticResources(rm){
+        Display_Manager._ShipResources = rm;
+    }
+
     static updateDisplay(){
-        Display_Manager.updateInventory();
+        Display_Manager.updateInventory(Display_Manager._ShipResources);
         Display_Manager.updateVitals();
     }
 
