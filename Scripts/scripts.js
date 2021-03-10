@@ -3,7 +3,7 @@ import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
 import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js";
 import {GameTimer} from "./Timer.js";
-import {GameEvent} from "./GameEvents.js";
+import {GameEvent, GiveItemEvent} from "./GameEvents.js";
 
 
 var _ResourceManager = new Resource_Manager(); //ship resources
@@ -74,7 +74,10 @@ _PlayerResources.addItem(items.AIR, 18);
 
 
 
-var ge = new GameEvent(5);
-GameTimer.AddEvent(ge);
+var eventTest = new GameEvent(5); //Creates a default game event that will execute in 5 'ticks'
+GameTimer.AddEvent(eventTest); //adds the event to the game timer
+
+var giveItemTest = new GiveItemEvent(100, _ResourceManager, items.ION_BATTERIES, 69); //creates an event that will give 69 ion batteries after 100 'ticks'
+GameTimer.AddEvent(giveItemTest);
 
 export {progressLocation}
