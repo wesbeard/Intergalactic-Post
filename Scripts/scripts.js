@@ -14,6 +14,8 @@ _DisplayManager.setStaticVitals(_PlayerResources);
 
 var content = document.getElementById("page-content");
 
+var multiplier = _DisplayManager.fadeMultiplier;
+
 // Uncomment to run devSequence
 //devSequence();
 
@@ -49,14 +51,16 @@ function prodSequence() {
     var ascii = document.getElementById("ascii-art");
     hideElement(ascii);
     // Load content and start fading in
-    _CrashSite.loadLocation(6000, 2000);
+    _DisplayManager.initOptions();
+    _CrashSite.loadLocation(6000);
     currentLocation = _CrashSite;
+    var content = document.getElementById("page-content");
     setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display
 function progressLocation() {
-    currentLocation.progress(2000);
+    currentLocation.progress();
 }
 
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
@@ -66,8 +70,5 @@ _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);
 _PlayerResources.addItem(items.AIR, 18);
-
-_DisplayManager.updateVitals();
-_DisplayManager.updateInventory(_ResourceManager);
 
 export {progressLocation}

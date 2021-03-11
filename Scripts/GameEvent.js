@@ -5,7 +5,7 @@ class GameEvent
         this.ticks = maxTicks;
     }
 
-    decrimentTick()
+    decrementTick()
     {
         this.ticks--
 
@@ -21,4 +21,4 @@ class GameEvent
     }
 }
 
-export{GameEvent, decrimentTick, executeEvent}
+export{GameEvent, decrementTick, executeEvent}
