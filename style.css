@@ -87,6 +87,7 @@ button:hover {
     text-align: center;
     margin-top: .5vh;
     margin-bottom: .5vh;
+    white-space: nowrap;
 }
 
 .event-button {
@@ -103,7 +104,7 @@ button:hover {
     font-size: 1.2vh;
     height: auto;
     position: fixed;
-    bottom: 0px;
+    bottom: 5px;
 }
 
 .ascii-button {
@@ -117,7 +118,6 @@ button:hover {
     flex-direction: column;
     padding: 1em;
     padding-left: 2em;
-    line-height: 0;
 }
 
 #speed-toggle {
@@ -125,6 +125,7 @@ button:hover {
     position: absolute;
     left: 10px;
     bottom: 0px;
+    line-height: 0px;
 }
 
 #speed-toggle:hover {

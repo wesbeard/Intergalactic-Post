@@ -6,7 +6,7 @@ const SPEEDS = {
     0: "Instant"
 };
 
-var fadeMultiplier = 2000;
+var fadeMultiplier = 0;
 
 class Display_Manager{
     static _VitalsResourceManager;
@@ -46,8 +46,6 @@ class Display_Manager{
         this.pageContent = document.getElementById("page-content");
         this.pageContent.appendChild(speedToggle);
         speedToggle.addEventListener("click", this.toggleSpeed);
-        speedToggle.style.display = "none";
-        setTimeout(fadeIn, 1000, speedToggle, 30);
     }
 
     toggleSpeed() {
@@ -200,6 +198,7 @@ Fade functions from https://stackoverflow.com/a/6121270
 function fadeIn(element, duration) {
     var op = 0.1;
     var timer = setInterval(function () {
+        element.style.opacity = op;
         element.style.display = 'flex';
         element.style.visibility = 'visible';
         if (op >= 1){

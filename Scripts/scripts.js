@@ -62,7 +62,7 @@ function prodSequence() {
     _DisplayManager.initOptions();
     _CrashSite.loadLocation(6000);
     currentLocation = _CrashSite;
-    setTimeout(fadeIn, 3000, content, 30);
+    //setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display
