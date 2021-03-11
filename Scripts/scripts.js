@@ -2,22 +2,28 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
 import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
+import {GameTimer} from "./Timer.js";
+import {GameEvent, GiveItemEvent} from "./GameEvents.js";
 
 
-var _ResourceManager = new Resource_Manager();
+var _ResourceManager = new Resource_Manager(); //ship resources
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
-var currentLocation;
-var _PlayerResources = new Resource_Manager();
+var _PlayerResources = new Resource_Manager(); //player resources
+var _Timer = new GameTimer();
 
+var currentLocation;
 _DisplayManager.setStaticVitals(_PlayerResources);
+_DisplayManager.setStaticResources(_ResourceManager);
+
+setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
 var content = document.getElementById("page-content");
 
 // Uncomment to run devSequence
 //devSequence();
 
-// Uncomment to run testSequence
+// Uncomment to run prodSequence
 prodSequence();
 
 // Dev sequence with all UI shown and little fading
@@ -34,18 +40,11 @@ function devSequence() {
     fadeIn(content, 0);
 }
 
-
 // Sequence with title, slower timing, and hidden UI
 function prodSequence() {
-
-    // Hide main page content
-    var content = document.getElementById("page-content");
-    toggleHideUI(content);
-    // Set the title text equal to the ASCII art title screen, fade out after 3 seconds
-    _DisplayManager.setTitleText(asciiTitle);
-    var titleDiv = document.getElementById("title");
-    fadeIn(titleDiv, 30);
-    setTimeout(fadeOut, 3000, title, 30);
+    // Display the title text ASCII art as the title screen text, fades out after 3 seconds
+    _DisplayManager.displayTitleText(asciiTitle);
+    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "5vh");
     // Hide unused UI elements
     var buttons = document.getElementById("buttons");
     hideElement(buttons);
@@ -53,15 +52,17 @@ function prodSequence() {
     hideElement(resources);
     var vitals = document.getElementById("vitals");
     hideElement(vitals);
+    var ascii = document.getElementById("ascii-art");
+    hideElement(ascii);
     // Load content and start fading in
-    _CrashSite.loadLocation(4000, 1000);
+    _CrashSite.loadLocation(6000, 2000);
     currentLocation = _CrashSite;
     setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display
 function progressLocation() {
-    currentLocation.progress();
+    currentLocation.progress(2000);
 }
 
 /*
@@ -69,15 +70,22 @@ _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
 */
+
 addResourceButton("Gather metal", "b1");
 addResourceButton("Gather Wiring", "b2");
 addResourceButton("Gather mechanical parts", "b3");
+
 
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);
 _PlayerResources.addItem(items.AIR, 18);
 
-_DisplayManager.updateVitals();
-_DisplayManager.updateInventory(_ResourceManager);
+
+
+var eventTest = new GameEvent(5); //Creates a default game event that will execute in 5 'ticks'
+GameTimer.AddEvent(eventTest); //adds the event to the game timer
+
+var giveItemTest = new GiveItemEvent(100, _ResourceManager, items.ION_BATTERIES, 69); //creates an event that will give 69 ion batteries after 100 'ticks'
+GameTimer.AddEvent(giveItemTest);
 
 export {progressLocation}

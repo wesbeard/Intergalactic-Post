@@ -2,9 +2,9 @@ import { clickAccumulate } from "./gameplay.js";
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 class Display_Manager{
-
     static _VitalsResourceManager;
     static _PlayerVitals;
+    static _ShipResources;
 
     static textDisplay = document.getElementById("text-display");
     static buttons = document.getElementById("buttons");
@@ -15,8 +15,18 @@ class Display_Manager{
     static titleText = document.getElementById("title-text");
 
     // Set the title text, can be used for main title as well as day changes
-    setTitleText(text) {
+    displayTitleText(text, fontSize = ".7vw") {
+        // Hide main page content
+        var content = document.getElementById("page-content");
+        toggleHideUI(content);
+        // Set title text
+        Display_Manager.titleText = document.getElementById("title-text");
+        Display_Manager.titleText.style.fontSize = fontSize;
         Display_Manager.titleText.innerHTML = text;
+        // fade in title
+        fadeIn(title, 20);
+        // Schedule fadeout for 3 seconds later
+        setTimeout(fadeOut, 2000, title, 20);
     }
 
     setStaticVitals(rm){
@@ -24,15 +34,24 @@ class Display_Manager{
         Display_Manager._PlayerVitals = new Vitals(rm);
     }
 
+    setStaticResources(rm){
+        Display_Manager._ShipResources = rm;
+    }
+
+    static updateDisplay(){
+        Display_Manager.updateInventory(Display_Manager._ShipResources);
+        Display_Manager.updateVitals();
+    }
+
     //will update the vitals card to the most current condition
-    updateVitals(){
+    static updateVitals(){
         var newVitals = Display_Manager._PlayerVitals.getCondition() + Display_Manager._PlayerVitals.getAir() + Display_Manager._PlayerVitals.getWater() +
         Display_Manager._PlayerVitals.getFood();
 
         Display_Manager.vitals.innerHTML = newVitals;
     }
 
-    updateInventory(rm){
+    static updateInventory(rm){
         Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
     }
 
@@ -59,13 +78,8 @@ class Display_Manager{
 
     // Add a button to the text display
     addEventButton(buttonText) {
-        var button = document.createElement("button");
+        var button = this.createButton(buttonText);
         button.setAttribute("class", "event-button");
-
-        //We need to find a better way of doing this, I have a few ideas - Adam
-        //button.addEventListener("click", progressLocation, false);
-
-        button.innerHTML = buttonText;
         button.style.display = "none";
         Display_Manager.textDisplay.appendChild(button);
         return button;
@@ -74,19 +88,45 @@ class Display_Manager{
     // Nuke all items in the text display div
     clearTextDisplay() {
         while (Display_Manager.textDisplay.firstChild) {
-        Display_Manager.textDisplay.removeChild(Display_Manager.textDisplay.firstChild);
+            Display_Manager.textDisplay.removeChild(Display_Manager.textDisplay.firstChild);
         }
     }
 
     // Fade in items in the text display one by one
     fadeInTextDisplay(multiplier) {
-        
+        this.ascii = document.getElementById("ascii-art");
+        if (this.ascii.style.visibility == "hidden")
+            fadeIn(ascii, 30);
         var textDisplayContents = Display_Manager.textDisplay.children;
 
         for (var i = 0; i < textDisplayContents.length; i++) {
             setTimeout(fadeIn, i * multiplier, textDisplayContents[i], 10);
         }
     }
+
+    createButton(buttonText) {
+        var buttonString = "+--";
+        var i;
+
+        for (i = 0; i < buttonText.length; i++) {
+            buttonString += "-";
+        }
+        buttonString += "--+\n|  ";
+        for (i = 0; i < buttonText.length; i++) {
+            buttonString += buttonText[i];
+        }
+        buttonString += "  |\n+--"
+        for (i = 0; i < buttonText.length; i++) {
+            buttonString += "-";
+        }
+        buttonString += "--+";
+
+        var button = document.createElement("pre");
+        button.setAttribute("class", "ascii-button");
+        button.innerHTML = buttonString;
+        return button;
+    }
+
 
 } //END OF DISPLAY MANAGER
 
@@ -154,5 +194,6 @@ function addResourceButton(name, type) {
     button.addEventListener("click", clickAccumulate(type));
     return button;
 }
+
 
 export {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton}
