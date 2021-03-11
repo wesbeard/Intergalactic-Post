@@ -5,14 +5,18 @@ import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI
 import {GameTimer} from "./Timer.js";
 import {GameEvents, GiveItemEvent} from "./GameEvents.js";
 
-var _ResourceManager = new Resource_Manager();
+
+var _ResourceManager = new Resource_Manager(); //ship resources
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
+var _PlayerResources = new Resource_Manager(); //player resources
 var _Timer = new GameTimer();
-var _PlayerResources = new Resource_Manager();
 
+var currentLocation;
 _DisplayManager.setStaticVitals(_PlayerResources);
 _DisplayManager.setStaticResources(_ResourceManager);
+
+setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
 var content = document.getElementById("page-content");
 
@@ -65,7 +69,6 @@ function prodSequence() {
 function progressLocation() {
     currentLocation.progress();
 }
-
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
@@ -73,6 +76,7 @@ _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);
 _PlayerResources.addItem(items.AIR, 18);
+
 
 var eventTest = new GameEvents(5); //Creates a default game event that will execute in 5 'ticks'
 GameTimer.AddEvent(eventTest); //adds the event to the game timer
