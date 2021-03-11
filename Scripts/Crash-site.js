@@ -28,11 +28,11 @@ class Crash_Site {
         switch (this.stage) {
             case 4:
                 console.log("here");
-                fadeIn(document.getElementById("vitals"), 30);
+                fadeIn(document.getElementById("vitals"), 20);
                 break;
             case 5:
-                fadeIn(document.getElementById("buttons"), 30);
-                fadeIn(document.getElementById("resource-display"), 30);
+                fadeIn(document.getElementById("buttons"), 20);
+                fadeIn(document.getElementById("resource-display"), 20);
                 break;
         }
 

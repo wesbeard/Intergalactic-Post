@@ -48,7 +48,7 @@ function devSequence() {
 function prodSequence() {
     // Display the title text ASCII art as the title screen text, fades out after 3 seconds
     _DisplayManager.displayTitleText(asciiTitle);
-    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "5vh");
+    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "8vh");
     // Hide unused UI elements
     var buttons = document.getElementById("buttons");
     hideElement(buttons);
