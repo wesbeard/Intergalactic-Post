@@ -4,7 +4,7 @@ import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI
 import {progressLocation} from './scripts.js';
 
 import {asciiCrash} from "./ASCII-Art.js"
-import { clickAccumulate } from "./gameplay.js";
+
 
 class Crash_Site {
 
@@ -101,9 +101,6 @@ class Crash_Site {
 
     setEventButtons() {
         var button;
-        var b1;
-        var b2;
-        var b3;
         switch (this.stage) {
             case 1:
                 button = this.DM.addEventButton("Look for the mail");
@@ -117,26 +114,9 @@ class Crash_Site {
             case 4:
                 button = this.DM.addEventButton("Start automating");
                 break;
-            case 5:
-                b1 = this.DM.addEventButton("Scavenge for metal");
-                b2 = this.DM.addEventButton("Scavenge for wiring");
-                b3 = this.DM.addEventButton("Scavenge for mechanical parts")
-                break;
         }
         if (button != undefined) {
             button.addEventListener("click", progressLocation, false);
-        }
-        if (b1 != undefined) {
-            var b1String = "b1";
-            b1.addEventListener("click", clickAccumulate(b1String));
-        }
-        if (b2 != undefined) {
-            var b2String = "b2";
-            b2.addEventListener("click", clickAccumulate(b2String));
-        }
-        if (b3 != undefined) {
-            var b3String = "b3";
-            b3.addEventListener("click", clickAccumulate(b3String));
         }
     }
 

@@ -1,3 +1,4 @@
+import { clickAccumulate } from "./gameplay.js";
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 class Display_Manager{
@@ -147,4 +148,11 @@ function fadeOut(element, duration) {
     }, duration);
 }
 
-export {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI}
+// Creates a button for the clicking aspect
+function addResourceButton(name, type) {
+    var button = addEventButton(name);
+    button.addEventListener("click", clickAccumulate(type));
+    return button;
+}
+
+export {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton}

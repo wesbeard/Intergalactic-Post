@@ -1,7 +1,7 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
-import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js";
+import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
 
 
 var _ResourceManager = new Resource_Manager();
@@ -64,9 +64,14 @@ function progressLocation() {
     currentLocation.progress();
 }
 
+/*
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
+*/
+addResourceButton("Gather metal", "b1");
+addResourceButton("Gather Wiring", "b2");
+addResourceButton("Gather mechanical parts", "b3");
 
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);

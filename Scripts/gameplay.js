@@ -5,8 +5,8 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 var _ResourceManager = new Resource_Manager();
 var _DisplayManager = new Display_Manager();
 // Add item to player inventory per click
-function clickAccumulate(name) {
-   switch(name) {
+function clickAccumulate(type) {
+   switch(type) {
        case 'b1':
            _ResourceManager.addItem(items.SCRAP_METAL, 5);
            _DisplayManager.updateInventory(_ResourceManager);
