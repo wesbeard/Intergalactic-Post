@@ -106,7 +106,7 @@ class Display_Manager{
     }
 
     // Add a text item to the text display
-    static addTextItem(text, emphasis = false) {
+    static addTextItem(text, emphasis = false, shouldHide = true) {
         var textBox = document.createElement("p");
         var node = document.createTextNode(text);
         textBox.appendChild(node);
@@ -114,7 +114,9 @@ class Display_Manager{
         if (emphasis) {
             textBox.style.fontStyle = "italic";
         }
-        textBox.style.display = "none";
+        if(shouldHide){
+            textBox.style.display = "none";
+        }
         Display_Manager.textDisplay.appendChild(textBox);
     }
 
