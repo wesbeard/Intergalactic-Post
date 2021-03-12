@@ -14,6 +14,10 @@ const items = {
 }
 
 class Resource_Manager{
+
+    static Player_Resources = new Resource_Manager();
+    static Ship_Resources = new Resource_Manager();
+
     constructor(){
         this.inventory = {};
     }
