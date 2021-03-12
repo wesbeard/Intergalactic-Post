@@ -119,6 +119,8 @@ class Display_Manager{
         }
         if (fadeOutDelay > 0) {
             setTimeout(fadeOut, fadeOutDelay, textBox, 30);
+            Display_Manager.textDisplay.prepend(textBox);
+            return;
         }
         Display_Manager.textDisplay.appendChild(textBox);
     }
