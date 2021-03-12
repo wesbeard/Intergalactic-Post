@@ -7,7 +7,7 @@ const SPEEDS = {
     0: "Instant"
 };
 
-var fadeMultiplier = 0;
+var fadeMultiplier = 2000;
 
 class Display_Manager{
 
