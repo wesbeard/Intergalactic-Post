@@ -1,20 +1,18 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
-import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js";
+import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
 import {GameTimer} from "./Timer.js";
 import {GameEvents, GiveItemEvent} from "./GameEvents.js";
 
 
-var _ResourceManager = new Resource_Manager(); //ship resources
+var _ResourceManager = Resource_Manager.Ship_Resources; //ship resources
+var _PlayerResources = Resource_Manager.Player_Resources; //player resources
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
-var _PlayerResources = new Resource_Manager(); //player resources
 var _Timer = new GameTimer();
 
 var currentLocation;
-_DisplayManager.setStaticVitals(_PlayerResources);
-_DisplayManager.setStaticResources(_ResourceManager);
 
 setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
@@ -69,9 +67,13 @@ function prodSequence() {
 function progressLocation() {
     currentLocation.progress();
 }
+
+/*
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
+*/
+
 
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);
