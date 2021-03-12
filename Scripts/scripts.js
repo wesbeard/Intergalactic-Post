@@ -6,15 +6,13 @@ import {GameTimer} from "./Timer.js";
 import {GameEvents, GiveItemEvent} from "./GameEvents.js";
 
 
-var _ResourceManager = new Resource_Manager(); //ship resources
+var _ResourceManager = Resource_Manager.Ship_Resources; //ship resources
+var _PlayerResources = Resource_Manager.Player_Resources; //player resources
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
-var _PlayerResources = new Resource_Manager(); //player resources
 var _Timer = new GameTimer();
 
 var currentLocation;
-_DisplayManager.setStaticVitals(_PlayerResources);
-_DisplayManager.setStaticResources(_ResourceManager);
 
 setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
