@@ -7,6 +7,25 @@ html {
     height: 100vh;
 }
 
+#page-content {
+    display: flex;
+    flex-direction: row;
+}
+
+#title {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+#title pre {
+    margin-top: 35vh;
+    justify-content: center;
+    font-size: .7vw;
+    line-height: normal;
+}
+
 button {
     margin: .5em;
     padding: .3em;
@@ -27,10 +46,11 @@ button:hover {
 
 #buttons {
     width: 25vw;
-    height: 100vh;
+    height: 70vh;
     display: flex;
     flex-direction: column;
     padding: 1em;
+    padding-top: 1.2em;
 }
 
 .action-button {
@@ -68,6 +88,7 @@ button:hover {
     text-align: center;
     margin-top: .5vh;
     margin-bottom: .5vh;
+    white-space: nowrap;
 }
 
 .event-button {
@@ -84,7 +105,7 @@ button:hover {
     font-size: 1.2vh;
     height: auto;
     position: fixed;
-    bottom: 0px;
+    bottom: 15px;
 }
 
 .ascii-button {
@@ -98,5 +119,28 @@ button:hover {
     flex-direction: column;
     padding: 1em;
     padding-left: 2em;
-    line-height: 0;
+}
+
+#speed-toggle {
+    font-size: 10pt;
+    position: absolute;
+    left: 10px;
+    bottom: 0px;
+    line-height: 0px;
+}
+
+#speed-toggle:hover {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 1.5vw;
+    }
+    #ascii-art {
+        font-size: 1vw;
+    }
+    .action-button {
+        font-size: 1.5vw;
+    }
 }

@@ -14,28 +14,29 @@ class Crash_Site {
         this.DM = new Display_Manager();
     }
 
-    loadLocation(fadeDelay = 4000, fadeMultiplier = 1000) {
+    loadLocation(fadeDelay = 6000) {
         this.setText();
         this.setEventButtons();
         this.setLocationArtwork();
-        setTimeout(this.DM.fadeInTextDisplay, fadeDelay, fadeMultiplier);
+        setTimeout(this.DM.fadeInTextDisplay, fadeDelay);
         this.stage++;
     }
     
-    progress(fadeMultiplier = 1000) {
+    progress() {
         
         this.DM.clearTextDisplay();
         this.setText();
         this.setEventButtons();
-        this.DM.fadeInTextDisplay(fadeMultiplier);
+        this.DM.fadeInTextDisplay();
 
         switch (this.stage) {
             case 4:
-                fadeIn(document.getElementById("vitals"), 30);
+                console.log("here");
+                fadeIn(document.getElementById("vitals"), 20);
                 break;
             case 5:
-                fadeIn(document.getElementById("buttons"), 30);
-                fadeIn(document.getElementById("resource-display"), 30);
+                fadeIn(document.getElementById("buttons"), 20);
+                fadeIn(document.getElementById("resource-display"), 20);
                 break;
         }
 

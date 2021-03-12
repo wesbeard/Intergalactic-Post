@@ -3,7 +3,7 @@ import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
 import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
 import {GameTimer} from "./Timer.js";
-import {GameEvent, GiveItemEvent} from "./GameEvents.js";
+import {GameEvents, GiveItemEvent} from "./GameEvents.js";
 
 
 var _ResourceManager = new Resource_Manager(); //ship resources
@@ -19,6 +19,11 @@ _DisplayManager.setStaticResources(_ResourceManager);
 setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
 var content = document.getElementById("page-content");
+
+var multiplier = _DisplayManager.fadeMultiplier;
+var currentLocation;
+
+setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
 // Uncomment to run devSequence
 //devSequence();
@@ -36,7 +41,6 @@ function devSequence() {
     hideElement(vitals);
     _CrashSite.loadLocation(0, 0);
     currentLocation = _CrashSite;
-    var content = document.getElementById("page-content");
     fadeIn(content, 0);
 }
 
@@ -44,7 +48,7 @@ function devSequence() {
 function prodSequence() {
     // Display the title text ASCII art as the title screen text, fades out after 3 seconds
     _DisplayManager.displayTitleText(asciiTitle);
-    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "5vh");
+    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "8vh");
     // Hide unused UI elements
     var buttons = document.getElementById("buttons");
     hideElement(buttons);
@@ -55,14 +59,15 @@ function prodSequence() {
     var ascii = document.getElementById("ascii-art");
     hideElement(ascii);
     // Load content and start fading in
-    _CrashSite.loadLocation(6000, 2000);
+    _DisplayManager.initOptions();
+    _CrashSite.loadLocation(6000);
     currentLocation = _CrashSite;
-    setTimeout(fadeIn, 3000, content, 30);
+    //setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display
 function progressLocation() {
-    currentLocation.progress(2000);
+    currentLocation.progress();
 }
 
 /*
@@ -77,8 +82,7 @@ _PlayerResources.addItem(items.WATER, 20);
 _PlayerResources.addItem(items.AIR, 18);
 
 
-
-var eventTest = new GameEvent(5); //Creates a default game event that will execute in 5 'ticks'
+var eventTest = new GameEvents(5); //Creates a default game event that will execute in 5 'ticks'
 GameTimer.AddEvent(eventTest); //adds the event to the game timer
 
 var giveItemTest = new GiveItemEvent(100, _ResourceManager, items.ION_BATTERIES, 69); //creates an event that will give 69 ion batteries after 100 'ticks'
