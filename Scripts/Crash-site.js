@@ -16,6 +16,8 @@ class Crash_Site {
     }
 
     loadLocation(fadeDelay = 6000) {
+        Display_Manager.clearTextDisplay();
+        Display_Manager.clearButtons();
         this.setText();
         this.setEventButtons();
         this.setLocationArtwork();
