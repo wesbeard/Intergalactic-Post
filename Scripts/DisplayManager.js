@@ -91,12 +91,10 @@ class Display_Manager{
 
     static addButtonsButton(buttonText, buttonID){
         var button = Display_Manager.createButton(buttonText);
-        button.setAttribute("class", "buttons-button");
+        button.setAttribute("class", "action-button");
         button.setAttribute("id", buttonID);
         //button.style.display = "none";
         Display_Manager.buttons.appendChild(button);
-        
-        //Display_Manager.buttons.innerHTML = button;
 
         return button;
     }
