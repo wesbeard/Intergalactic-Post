@@ -122,7 +122,9 @@ class Crash_Site {
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 5:
-                button = Display_Manager.addButtonsButton("Gather Scrap", ButtonTypes.SCRAP_GATHER);
+
+                //This is how you add a button
+                button = Display_Manager.addButtonsButton("Gather Scrap", ButtonTypes.SCRAP_GATHER); //it takes the buttons name and the ID it will use
                 button.addEventListener("click", this.buttonsPressed, false);
 
                 button = Display_Manager.addButtonsButton("Gather Wires", ButtonTypes.WIRE_GATHER);
@@ -137,7 +139,7 @@ class Crash_Site {
     }
 
     buttonsPressed(value){
-        var id = value.target.id;
+        var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
         console.log(id);
     }
 
