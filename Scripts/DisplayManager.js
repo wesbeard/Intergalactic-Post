@@ -1,6 +1,5 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
-import {Resource_Manager} from "./ResourceManager.js";
 
 const SPEEDS = {
     2000: "Slow",
