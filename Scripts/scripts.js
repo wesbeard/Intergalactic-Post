@@ -71,10 +71,6 @@ _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
 */
 
-addResourceButton("Gather metal", "b1");
-addResourceButton("Gather Wiring", "b2");
-addResourceButton("Gather mechanical parts", "b3");
-
 
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);

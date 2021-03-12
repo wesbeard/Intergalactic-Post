@@ -1,10 +1,11 @@
-
-import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js"
-
-import {progressLocation} from './scripts.js';
-
+import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js"
+import {Resource_Manager, items} from "./ResourceManager.js";
+import {progressLocation} from './scripts.js'
 import {asciiCrash} from "./ASCII-Art.js"
+import {GameEvent, GiveItemEvent} from "./GameEvents.js"
+import { GameTimer } from "./Timer.js";
 
+var _ResourceManager = new Resource_Manager();
 
 class Crash_Site {
 
@@ -124,5 +125,28 @@ class Crash_Site {
         this.DM.setArtwork(asciiCrash)
     }
 }
+
+// Add item to player inventory per click
+function clickAccumulate(type) {
+    var metalEvent = new GiveItemEvent(100, _ResourceManager, items.SCRAP_METAL, 5);
+    var wiringEvent = new GiveItemEvent(100, _ResourceManager, items.WIRING, 1);
+    var mechEvent = new GiveItemEvent(100, _ResourceManager, items.MECHANICAL_PARTS, 2);
+    switch(type) {
+        case 'b1':
+            GameTimer.AddEvent(metalEvent);
+            alert("here");
+            break;
+         case 'b2':
+             GameTimer.AddEvent(wiringEvent);
+             alert("here 2");
+             break;
+         case 'b3':
+             GameTimer.AddEvent(mechEvent);
+             alert("here 3");
+             break;
+         default:
+             alert("Not valid?");
+    }
+ }
 
 export {Crash_Site}
