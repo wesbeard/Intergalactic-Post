@@ -1,10 +1,19 @@
-import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
+
+const SPEEDS = {
+    2000: "Slow",
+    1000: "Fast",
+    0: "Instant"
+};
+
+var fadeMultiplier = 0;
+
 class Display_Manager{
     static _VitalsResourceManager;
     static _PlayerVitals;
     static _ShipResources;
 
+    static pageContent = document.getElementById("page-content");
     static textDisplay = document.getElementById("text-display");
     static buttons = document.getElementById("buttons");
     static vitals = document.getElementById("vitals");
@@ -26,6 +35,33 @@ class Display_Manager{
         fadeIn(title, 20);
         // Schedule fadeout for 3 seconds later
         setTimeout(fadeOut, 2000, title, 20);
+    }
+
+    // Any non-gameplay display elements can go here
+    initOptions() {
+        // Add text speed button
+        var speedToggle = document.createElement("pre");
+        speedToggle.setAttribute("id", "speed-toggle");
+        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
+        this.pageContent = document.getElementById("page-content");
+        this.pageContent.appendChild(speedToggle);
+        speedToggle.addEventListener("click", this.toggleSpeed);
+    }
+
+    toggleSpeed() {
+        switch (fadeMultiplier) {
+            case 0:
+                fadeMultiplier = 2000;
+                break;
+            case 2000:
+                fadeMultiplier = 1000;
+                break;
+            case 1000:
+                fadeMultiplier = 0;
+                break;
+        }
+        var speedToggle = document.getElementById("speed-toggle");
+        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
     }
 
     setStaticVitals(rm){
@@ -92,14 +128,14 @@ class Display_Manager{
     }
 
     // Fade in items in the text display one by one
-    fadeInTextDisplay(multiplier) {
+    fadeInTextDisplay() {
         this.ascii = document.getElementById("ascii-art");
         if (this.ascii.style.visibility == "hidden")
             fadeIn(ascii, 30);
         var textDisplayContents = Display_Manager.textDisplay.children;
 
         for (var i = 0; i < textDisplayContents.length; i++) {
-            setTimeout(fadeIn, i * multiplier, textDisplayContents[i], 10);
+            setTimeout(fadeIn, i * fadeMultiplier, textDisplayContents[i], 10);
         }
     }
 
@@ -125,7 +161,6 @@ class Display_Manager{
         button.innerHTML = buttonString;
         return button;
     }
-
 
 } //END OF DISPLAY MANAGER
 
@@ -163,6 +198,7 @@ Fade functions from https://stackoverflow.com/a/6121270
 function fadeIn(element, duration) {
     var op = 0.1;
     var timer = setInterval(function () {
+        element.style.opacity = op;
         element.style.display = 'flex';
         element.style.visibility = 'visible';
         if (op >= 1){

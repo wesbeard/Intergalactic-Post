@@ -4,7 +4,7 @@ import { GameTimer } from "./Timer.js";
 /*
 Default Game event that acts as a superclass for the other game events
 */
-class GameEvent
+class GameEvents
 {
     constructor(maxTicks)
     {
@@ -30,10 +30,9 @@ class GameEvent
 
 /*
 Will add an item to whatever resource manager is given.
-
 this can be used to add air for for the player or add a "crafted" item to an inventory
 */
-class GiveItemEvent extends GameEvent{
+class GiveItemEvent extends GameEvents {
     constructor(maxTicks, resourceManager, item, amount){
         super(maxTicks);
         this.item = item;
@@ -47,4 +46,4 @@ class GiveItemEvent extends GameEvent{
     }
 }
 
-export{GameEvent, GiveItemEvent}
+export{GameEvents, GiveItemEvent}
