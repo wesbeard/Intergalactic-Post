@@ -106,7 +106,7 @@ class Display_Manager{
     }
 
     // Add a text item to the text display
-    static addTextItem(text, emphasis = false, shouldHide = true) {
+    static addTextItem(text, emphasis = false, shouldHide = true, fadeOutDelay = 0) {
         var textBox = document.createElement("p");
         var node = document.createTextNode(text);
         textBox.appendChild(node);
@@ -116,6 +116,9 @@ class Display_Manager{
         }
         if(shouldHide){
             textBox.style.display = "none";
+        }
+        if (fadeOutDelay > 0) {
+            setTimeout(fadeOut, fadeOutDelay, textBox, 30);
         }
         Display_Manager.textDisplay.appendChild(textBox);
     }

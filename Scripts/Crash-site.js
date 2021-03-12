@@ -186,19 +186,19 @@ class Crash_Site {
             case ButtonTypes.SCRAP_GATHER:
                 var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
                 GameTimer.AddEvent(metalEvent);
-                Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false);
+                Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
                 break;
 
             case ButtonTypes.WIRE_GATHER:
                 var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
                 GameTimer.AddEvent(wiringEvent);
-                Display_Manager.addTextItem("You scrounge around for some Wiring", false, false);
+                Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
                 break;
 
             case ButtonTypes.MECHANICAL_GATHER:
                 var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 2);
                 GameTimer.AddEvent(mechEvent);
-                Display_Manager.addTextItem("You start to pick at the ship for Mechanical Parts", false, false);
+                Display_Manager.addTextItem("You pick through the ship for Mechanical Parts", false, false, 2000);
                 break;
             default:
                 alert("Not valid?");
