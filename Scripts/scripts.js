@@ -1,7 +1,7 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
-import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js";
+import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
 import {GameTimer} from "./Timer.js";
 import {GameEvents, GiveItemEvent} from "./GameEvents.js";
 
@@ -67,9 +67,13 @@ function prodSequence() {
 function progressLocation() {
     currentLocation.progress();
 }
+
+/*
 _ResourceManager.addItem(items.SCRAP_METAL, 5);
 _ResourceManager.addItem(items.WIRING, 1);
 _ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
+*/
+
 
 _PlayerResources.addItem(items.FOOD,15);
 _PlayerResources.addItem(items.WATER, 20);

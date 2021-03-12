@@ -1,7 +1,11 @@
+import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js"
+import {Resource_Manager, items} from "./ResourceManager.js";
+import {progressLocation} from './scripts.js'
+import {asciiCrash} from "./ASCII-Art.js"
+import {GameEvents, GiveItemEvent} from "./GameEvents.js"
+import { GameTimer } from "./Timer.js";
 
-import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI} from "./DisplayManager.js";
-import {progressLocation} from './scripts.js';
-import {asciiCrash} from "./ASCII-Art.js";
+var _ResourceManager = new Resource_Manager();
 
 const ButtonTypes = {
     SCRAP_GATHER : 'scrap-gather',
@@ -34,7 +38,7 @@ class Crash_Site {
 
         switch (this.stage) {
             case 4:
-                console.log("here");
+                //console.log("here");
                 fadeIn(document.getElementById("vitals"), 20);
                 break;
             case 5:
@@ -142,12 +146,41 @@ class Crash_Site {
 
     buttonsPressed(value){
         var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
-        console.log(id);
+        //console.log(id);
+        
+        switch(id) {
+
+            case ButtonTypes.SCRAP_GATHER:
+                var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
+                GameTimer.AddEvent(metalEvent);
+                //alert("here");
+                break;
+
+            case ButtonTypes.WIRE_GATHER:
+                var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
+                GameTimer.AddEvent(wiringEvent);
+                //alert("here 2");
+                break;
+
+            case ButtonTypes.MECHANICAL_GATHER:
+                var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 2);
+                GameTimer.AddEvent(mechEvent);
+                //alert("here 3");
+                break;
+
+            default:
+                alert("Not valid?");
+        }
     }
 
     setLocationArtwork() {
         Display_Manager.setArtwork(asciiCrash)
     }
 }
+
+// Add item to player inventory per click
+function clickAccumulate(type) {
+    
+ }
 
 export {Crash_Site}
