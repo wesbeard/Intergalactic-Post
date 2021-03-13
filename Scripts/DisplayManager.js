@@ -7,9 +7,9 @@ const SPEEDS = {
     0: "Instant"
 };
 
-var fadeMultiplier = 0;
-
 class Display_Manager{
+
+    static fadeMultiplier = 0;
 
     static _PlayerVitals = new Vitals(Resource_Manager.Player_Resources);
 
@@ -42,26 +42,26 @@ class Display_Manager{
         // Add text speed button
         var speedToggle = document.createElement("pre");
         speedToggle.setAttribute("id", "speed-toggle");
-        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
+        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[Display_Manager.fadeMultiplier] + " >";
         this.pageContent = document.getElementById("page-content");
         this.pageContent.appendChild(speedToggle);
         speedToggle.addEventListener("click", this.toggleSpeed);
     }
 
     toggleSpeed() {
-        switch (fadeMultiplier) {
+        switch (Display_Manager.fadeMultiplier) {
             case 0:
-                fadeMultiplier = 2000;
+                Display_Manager.fadeMultiplier = 2000;
                 break;
             case 2000:
-                fadeMultiplier = 1000;
+                Display_Manager.fadeMultiplier = 1000;
                 break;
             case 1000:
-                fadeMultiplier = 0;
+                Display_Manager.fadeMultiplier = 0;
                 break;
         }
         var speedToggle = document.getElementById("speed-toggle");
-        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
+        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[Display_Manager.fadeMultiplier] + " >";
     }
 
     static updateDisplay(){
@@ -139,11 +139,27 @@ class Display_Manager{
         this.ascii = document.getElementById("ascii-art");
         if (this.ascii.style.visibility == "hidden")
             fadeIn(ascii, 30);
+        
         var textDisplayContents = Display_Manager.textDisplay.children;
 
-        for (var i = 0; i < textDisplayContents.length; i++) {
-            setTimeout(fadeIn, i * fadeMultiplier, textDisplayContents[i], 10);
+        setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10);
+
+        if(textDisplayContents.length > 1){
+            Display_Manager.fadeInEachElement(textDisplayContents, 1);
         }
+        
+    }
+
+    static fadeInEachElement(elements, index) {
+        console.log("index: " + index + " Len: " + elements.length);
+
+        if(index != elements.length){
+            setTimeout(fadeIn, Display_Manager.fadeMultiplier, elements[index], 10);
+            index ++;
+            setTimeout(Display_Manager.fadeInEachElement, Display_Manager.fadeMultiplier, elements, index);
+        }
+        
+        //setTimeout(fadeIn, i * Display_Manager.fadeMultiplier, textDisplayContents[i], 10);
     }
 
     static createButton(buttonText) {
