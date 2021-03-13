@@ -23,6 +23,11 @@ var currentLocation;
 
 setInterval(_Timer.TimerLoop, 1000); //The start of the game timer
 
+//Sets the starting values for Air food and water
+_PlayerResources.addItem(items.FOOD,15);
+_PlayerResources.addItem(items.WATER, 20);
+_PlayerResources.addItem(items.AIR, 18);
+
 // Uncomment to run devSequence
 //devSequence();
 
@@ -67,20 +72,5 @@ function prodSequence() {
 function progressLocation() {
     currentLocation.progress();
 }
-
-/*
-_ResourceManager.addItem(items.SCRAP_METAL, 5);
-_ResourceManager.addItem(items.WIRING, 1);
-_ResourceManager.addItem(items.MECHANICAL_PARTS, 1);
-*/
-
-
-_PlayerResources.addItem(items.FOOD,15);
-_PlayerResources.addItem(items.WATER, 20);
-_PlayerResources.addItem(items.AIR, 18);
-
-
-var eventTest = new GameEvents(5); //Creates a default game event that will execute in 5 'ticks'
-GameTimer.AddEvent(eventTest); //adds the event to the game timer
 
 export {progressLocation}
