@@ -81,6 +81,10 @@ class Display_Manager{
         Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
     }
 
+    static removeElement(elementID){
+        document.getElementById(elementID).remove();
+    }
+
     // Set the current ASCII artwork
     static setArtwork(art) {
         var pre = document.createElement("pre");
@@ -126,10 +130,13 @@ class Display_Manager{
     }
 
     // Add a button to the text display (center text area)
-    static addEventButton(buttonText) {
+    static addEventButton(buttonText, shouldHide = true) {
         var button = this.createButton(buttonText);
         button.setAttribute("class", "event-button");
-        button.style.display = "none";
+        if(shouldHide)
+        {
+            button.style.display = "none";
+        }
         Display_Manager.textDisplay.appendChild(button);
         return button;
     }
@@ -159,7 +166,6 @@ class Display_Manager{
     }
 
     static fadeInEachElement(elements, index) {
-        console.log(index);
         if(index != elements.length){ //if its not at the end of the list then add the element at the index, increment and call this funciton again
             setTimeout(fadeIn, Display_Manager.fadeMultiplier, elements[index], 10);
             index ++;
