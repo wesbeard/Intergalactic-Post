@@ -116,7 +116,7 @@ class Resource_Manager{
     get htmlDescription(){
         var desc = "";
         if(Object.keys(this.inventory).length == 0){
-            return '<p class="resource RedText">~INVENTORY EMPTY~</p>';
+            return '<p>! Gather Resources !</p>';
         }
         else{
             for(var key in this.inventory){

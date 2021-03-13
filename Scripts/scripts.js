@@ -83,7 +83,4 @@ _PlayerResources.addItem(items.AIR, 18);
 var eventTest = new GameEvents(5); //Creates a default game event that will execute in 5 'ticks'
 GameTimer.AddEvent(eventTest); //adds the event to the game timer
 
-var giveItemTest = new GiveItemEvent(100, _ResourceManager, items.ION_BATTERIES, 69); //creates an event that will give 69 ion batteries after 100 'ticks'
-GameTimer.AddEvent(giveItemTest);
-
 export {progressLocation}
