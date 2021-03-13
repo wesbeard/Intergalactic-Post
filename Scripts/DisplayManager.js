@@ -149,24 +149,22 @@ class Display_Manager{
         
         var textDisplayContents = Display_Manager.textDisplay.children;
 
-        setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10);
+        if(textDisplayContents.length > 0)
+            setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10); //fades in first element
 
         if(textDisplayContents.length > 1){
-            Display_Manager.fadeInEachElement(textDisplayContents, 1);
+            Display_Manager.fadeInEachElement(textDisplayContents, 1); //if there is more than one element then it starts fading in the rest 1 at a time
         }
         
     }
 
     static fadeInEachElement(elements, index) {
-        console.log("index: " + index + " Len: " + elements.length);
-
-        if(index != elements.length){
+        console.log(index);
+        if(index != elements.length){ //if its not at the end of the list then add the element at the index, increment and call this funciton again
             setTimeout(fadeIn, Display_Manager.fadeMultiplier, elements[index], 10);
             index ++;
             setTimeout(Display_Manager.fadeInEachElement, Display_Manager.fadeMultiplier, elements, index);
         }
-        
-        //setTimeout(fadeIn, i * Display_Manager.fadeMultiplier, textDisplayContents[i], 10);
     }
 
     static createButton(buttonText) {
