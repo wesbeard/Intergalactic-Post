@@ -56,6 +56,7 @@ button:hover {
 .action-button {
     width: 15vw;
     margin-left: auto;
+    cursor: pointer;
 }
 
 #center-column {
@@ -133,7 +134,7 @@ button:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1200px) {
     html {
         font-size: 1.5vw;
     }
