@@ -3,6 +3,14 @@ import {GameEvents, GiveItemEvent} from "./GameEvents.js";
 
 class GameTimer
 {
+    constructor()
+    {
+        this.shouldTick = true;
+        this.currentSecond = 0;
+        this.currentHour = 0;
+        this.currentDay = 0
+    }
+
     static EventQueue = [];
 
     static AddEvent(event)
@@ -26,6 +34,28 @@ class GameTimer
         GameTimer.EventQueue.forEach(GameTimer.doIt);
 
         Display_Manager.updateDisplay();
+        this.UpdateDayAndTime();
+    }
+
+    UpdateDayAndTime()
+    {
+        this.currentSecond++;
+
+        if (this.currentSecond == 120)
+        {
+            this.currentHour++
+            this.currentSecond = 0;
+        }
+        
+        if (this.currentHour == 24)
+        {
+            this.currentDay++;
+            this.currentHour = 0;
+        }
+
+        console.log("Day: " + this.currentDay.toString() 
+                  + " Hour: " + this.currentHour.toString()
+                  + " Second: " + this.currentSecond.toString());
     }
 
     static doIt(event){
