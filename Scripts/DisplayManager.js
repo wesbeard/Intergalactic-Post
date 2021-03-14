@@ -7,7 +7,7 @@ const SPEEDS = {
     0: "Instant"
 };
 
-var fadeMultiplier = 0;
+var fadeMultiplier = 2000;
 
 class Display_Manager{
 
@@ -91,12 +91,10 @@ class Display_Manager{
 
     static addButtonsButton(buttonText, buttonID){
         var button = Display_Manager.createButton(buttonText);
-        button.setAttribute("class", "buttons-button");
+        button.setAttribute("class", "action-button");
         button.setAttribute("id", buttonID);
         //button.style.display = "none";
         Display_Manager.buttons.appendChild(button);
-        
-        //Display_Manager.buttons.innerHTML = button;
 
         return button;
     }
@@ -108,7 +106,7 @@ class Display_Manager{
     }
 
     // Add a text item to the text display
-    static addTextItem(text, emphasis = false) {
+    static addTextItem(text, emphasis = false, shouldHide = true, fadeOutDelay = 0) {
         var textBox = document.createElement("p");
         var node = document.createTextNode(text);
         textBox.appendChild(node);
@@ -116,7 +114,14 @@ class Display_Manager{
         if (emphasis) {
             textBox.style.fontStyle = "italic";
         }
-        textBox.style.display = "none";
+        if(shouldHide){
+            textBox.style.display = "none";
+        }
+        if (fadeOutDelay > 0) {
+            setTimeout(fadeOut, fadeOutDelay, textBox, 30);
+            Display_Manager.textDisplay.prepend(textBox);
+            return;
+        }
         Display_Manager.textDisplay.appendChild(textBox);
     }
 

@@ -20,6 +20,8 @@ class Crash_Site {
     }
 
     loadLocation(fadeDelay = 6000) {
+        Display_Manager.clearTextDisplay();
+        Display_Manager.clearButtons();
         this.setText();
         this.setEventButtons();
         this.setLocationArtwork();
@@ -39,7 +41,7 @@ class Crash_Site {
                 //console.log("here");
                 fadeIn(document.getElementById("vitals"), 20);
                 break;
-            case 5:
+            case 6:
                 fadeIn(document.getElementById("buttons"), 20);
                 fadeIn(document.getElementById("resource-display"), 20);
                 break;
@@ -95,13 +97,43 @@ class Crash_Site {
                 Display_Manager.addTextItem("That's why it's so damn wet back here", true);
                 Display_Manager.addTextItem("The leak will need to be patched before I can see if it's operational");
                 Display_Manager.addTextItem("But at least I've got an idea of when I'll die");
-                Display_Manager.addTextItem("It's a little later than I thought");
+                Display_Manager.addTextItem("...It's a little later than I thought");
                 break;
             case 4:
-                Display_Manager.addTextItem("You find automation robots");
+                Display_Manager.addTextItem("I'll need to repair these somehow...");
+                Display_Manager.addTextItem("My mail delivery personnel training did NOT prepare me for this");
+                Display_Manager.addTextItem("Honestly, nothing could have prepared me for this");
+                Display_Manager.addTextItem("The voice of SAL breaks the silence", true);
+                Display_Manager.addTextItem("\"Captain, if you do nothing your life");
+                Display_Manager.addTextItem("support will run out in less than one sol\"");
+                Display_Manager.addTextItem("What the hell is a \"sol\"?");
+                Display_Manager.addTextItem("\"One revolution around this system's star, captain\"");
+                Display_Manager.addTextItem("The locals also base time off of Lunas,");
+                Display_Manager.addTextItem("one revolution of this planets moon around the planet");
+                Display_Manager.addTextItem("SAL, why can't we just use normal time?");
+                Display_Manager.addTextItem("\"Do you want to look like a tourist, captain?\"");
+                Display_Manager.addTextItem("I guess not...");
+                Display_Manager.addTextItem("\"Captain, need I remind you of your impending death?\"");
+                Display_Manager.addTextItem("No, SAL", true);
+                Display_Manager.addTextItem("I'll need to look for some scrap around here...");
+                Display_Manager.addTextItem("Spare wiring, mechanical parts, that sort of thing");
                 break;
             case 5:
-                Display_Manager.addTextItem("!WIP! automation gameplay starts now");
+                Display_Manager.addTextItem("Climbing into the hold of the ship you find... nothing");
+                Display_Manager.addTextItem("Wait, there is something!");
+                Display_Manager.addTextItem("Not something useful, of course");
+                Display_Manager.addTextItem("It's just your mail delivery excellence medal");
+                Display_Manager.addTextItem("It'd fallen off the wall from its place of honor");
+                Display_Manager.addTextItem("In your 37 years delivering parcel between galaxies");
+                Display_Manager.addTextItem("You'd never missed a delivery, ever");
+                Display_Manager.addTextItem("Looks like that was about to end");
+                Display_Manager.addTextItem("Not that it matters if you're dead...");
+                Display_Manager.addTextItem("You do, finally, notice something of use");
+                Display_Manager.addTextItem("The metal shelving that held the mail bins had crumpled on impact");
+                Display_Manager.addTextItem("No wonder the mail is all over the place");
+                Display_Manager.addTextItem("I'll have to reorganize it all later...");
+                Display_Manager.addTextItem("I can however use the shelving for a temporary source of scrap metal");
+                Display_Manager.addTextItem("Maybe I'm not doomed after all...");
                 break;
         }
     }
@@ -122,11 +154,14 @@ class Crash_Site {
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 4:
-                button = Display_Manager.addEventButton("Start automating");
+                button = Display_Manager.addEventButton("Look around (or die)");
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 5:
-
+                button = Display_Manager.addEventButton("Scavenge scrap");
+                button.addEventListener("click", progressLocation, false);
+                break;
+            case 6:
                 //This is how you add a button
                 button = Display_Manager.addButtonsButton("Gather Scrap", ButtonTypes.SCRAP_GATHER); //it takes the buttons name and the ID it will use
                 button.addEventListener("click", this.buttonsPressed, false);
@@ -134,7 +169,7 @@ class Crash_Site {
                 button = Display_Manager.addButtonsButton("Gather Wires", ButtonTypes.WIRE_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
                 
-                button = Display_Manager.addButtonsButton("Gather Mechanical Parts", ButtonTypes.MECHANICAL_GATHER);
+                button = Display_Manager.addButtonsButton("Gather Parts", ButtonTypes.MECHANICAL_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
                 
                 break;
@@ -151,21 +186,20 @@ class Crash_Site {
             case ButtonTypes.SCRAP_GATHER:
                 var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
                 GameTimer.AddEvent(metalEvent);
-                //alert("here");
+                Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
                 break;
 
             case ButtonTypes.WIRE_GATHER:
                 var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
                 GameTimer.AddEvent(wiringEvent);
-                //alert("here 2");
+                Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
                 break;
 
             case ButtonTypes.MECHANICAL_GATHER:
                 var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 2);
                 GameTimer.AddEvent(mechEvent);
-                //alert("here 3");
+                Display_Manager.addTextItem("You pick through the ship for Mechanical Parts", false, false, 2000);
                 break;
-
             default:
                 alert("Not valid?");
         }
