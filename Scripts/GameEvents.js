@@ -1,5 +1,5 @@
 import {items, Resource_Manager} from "./ResourceManager.js";
-import { GameTimer } from "./Timer.js";
+import { GameTimer } from "./GameTimer.js";
 
 /*
 Default Game event that acts as a superclass for the other game events

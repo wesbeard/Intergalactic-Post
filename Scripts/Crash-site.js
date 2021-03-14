@@ -3,7 +3,7 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 import {progressLocation} from './scripts.js'
 import {asciiCrash} from "./ASCII-Art.js"
 import {GameEvents, GiveItemEvent} from "./GameEvents.js"
-import { GameTimer } from "./Timer.js";
+import { GameTimer } from "./GameTimer.js";
 
 var _ResourceManager = new Resource_Manager();
 
