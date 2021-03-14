@@ -1,3 +1,4 @@
+import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 
 const SPEEDS = {
@@ -6,12 +7,11 @@ const SPEEDS = {
     0: "Instant"
 };
 
-var fadeMultiplier = 0;
+var fadeMultiplier = 2000;
 
 class Display_Manager{
-    static _VitalsResourceManager;
-    static _PlayerVitals;
-    static _ShipResources;
+
+    static _PlayerVitals = new Vitals(Resource_Manager.Player_Resources);
 
     static pageContent = document.getElementById("page-content");
     static textDisplay = document.getElementById("text-display");
@@ -64,17 +64,8 @@ class Display_Manager{
         speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
     }
 
-    setStaticVitals(rm){
-        Display_Manager._VitalsResourceManager = rm;
-        Display_Manager._PlayerVitals = new Vitals(rm);
-    }
-
-    setStaticResources(rm){
-        Display_Manager._ShipResources = rm;
-    }
-
     static updateDisplay(){
-        Display_Manager.updateInventory(Display_Manager._ShipResources);
+        Display_Manager.updateInventory(Resource_Manager.Ship_Resources);
         Display_Manager.updateVitals();
     }
 
@@ -91,15 +82,31 @@ class Display_Manager{
     }
 
     // Set the current ASCII artwork
-    setArtwork(art) {
+    static setArtwork(art) {
         var pre = document.createElement("pre");
         pre.setAttribute("class", "art-piece");
         pre.textContent = art;
         Display_Manager.asciiArt.appendChild(pre);
     }
 
+    static addButtonsButton(buttonText, buttonID){
+        var button = Display_Manager.createButton(buttonText);
+        button.setAttribute("class", "action-button");
+        button.setAttribute("id", buttonID);
+        //button.style.display = "none";
+        Display_Manager.buttons.appendChild(button);
+
+        return button;
+    }
+
+    static clearButtons(){
+        while (Display_Manager.buttons.firstChild) {
+            Display_Manager.buttons.removeChild(Display_Manager.buttons.firstChild);
+        }
+    }
+
     // Add a text item to the text display
-    addTextItem(text, emphasis = false) {
+    static addTextItem(text, emphasis = false, shouldHide = true, fadeOutDelay = 0) {
         var textBox = document.createElement("p");
         var node = document.createTextNode(text);
         textBox.appendChild(node);
@@ -107,12 +114,19 @@ class Display_Manager{
         if (emphasis) {
             textBox.style.fontStyle = "italic";
         }
-        textBox.style.display = "none";
+        if(shouldHide){
+            textBox.style.display = "none";
+        }
+        if (fadeOutDelay > 0) {
+            setTimeout(fadeOut, fadeOutDelay, textBox, 30);
+            Display_Manager.textDisplay.prepend(textBox);
+            return;
+        }
         Display_Manager.textDisplay.appendChild(textBox);
     }
 
-    // Add a button to the text display
-    addEventButton(buttonText) {
+    // Add a button to the text display (center text area)
+    static addEventButton(buttonText) {
         var button = this.createButton(buttonText);
         button.setAttribute("class", "event-button");
         button.style.display = "none";
@@ -121,14 +135,14 @@ class Display_Manager{
     }
 
     // Nuke all items in the text display div
-    clearTextDisplay() {
+    static clearTextDisplay() {
         while (Display_Manager.textDisplay.firstChild) {
             Display_Manager.textDisplay.removeChild(Display_Manager.textDisplay.firstChild);
         }
     }
 
     // Fade in items in the text display one by one
-    fadeInTextDisplay() {
+    static fadeInTextDisplay() {
         this.ascii = document.getElementById("ascii-art");
         if (this.ascii.style.visibility == "hidden")
             fadeIn(ascii, 30);
@@ -139,7 +153,7 @@ class Display_Manager{
         }
     }
 
-    createButton(buttonText) {
+    static createButton(buttonText) {
         var buttonString = "+--";
         var i;
 
@@ -223,4 +237,12 @@ function fadeOut(element, duration) {
     }, duration);
 }
 
-export {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI}
+// Creates a button for the clicking aspect
+function addResourceButton(name, type) {
+    var button = addEventButton(name);
+    button.addEventListener("click", clickAccumulate(type));
+    return button;
+}
+
+
+export {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton}

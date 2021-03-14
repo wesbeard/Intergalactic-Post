@@ -14,6 +14,10 @@ const items = {
 }
 
 class Resource_Manager{
+
+    static Player_Resources = new Resource_Manager();
+    static Ship_Resources = new Resource_Manager();
+
     constructor(){
         this.inventory = {};
     }
@@ -112,7 +116,7 @@ class Resource_Manager{
     get htmlDescription(){
         var desc = "";
         if(Object.keys(this.inventory).length == 0){
-            return '<p class="resource RedText">~INVENTORY EMPTY~</p>';
+            return '<p>! Gather Resources !</p>';
         }
         else{
             for(var key in this.inventory){
