@@ -1,4 +1,5 @@
 const items = {
+    PLACEHOLDER: "placeholder",
     FOOD: "Food",
     WATER: "Water",
     AIR: "Air",

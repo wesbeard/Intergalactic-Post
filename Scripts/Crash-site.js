@@ -15,8 +15,16 @@ const ButtonTypes = {
 
 class Crash_Site {
 
+    static resources = new Resource_Manager();
+
     constructor(){
         this.stage = 1;
+        Crash_Site.resources.addItem(items.FOOD, 20);
+        Crash_Site.resources.addItem(items.WATER, 35);
+        Crash_Site.resources.addItem(items.MECHANICAL_PARTS, 10);
+        Crash_Site.resources.addItem(items.WIRING, 15);
+        Crash_Site.resources.addItem(items.SCRAP_METAL, 12);
+        Crash_Site.resources.addItem(items.PLACEHOLDER, 1);
     }
 
     loadLocation(fadeDelay = 6000) {
@@ -89,11 +97,12 @@ class Crash_Site {
                 Display_Manager.addTextItem("So at least some of the mail survived");
                 Display_Manager.addTextItem("Thank god");
                 Display_Manager.addTextItem("Heading to the starboard cabin you locate the oxygenator", true);
-                Display_Manager.addTextItem("It's working, but very slowly", true);
-                Display_Manager.addTextItem("Should be enough to keep me alive for another few hours at least...");
+                Display_Manager.addTextItem("It seemed to have stopped working, thats no good", true);
+                Display_Manager.addTextItem("There should be enough air in here to keep me alive for a few hours at least");
+                Display_Manager.addTextItem("but I should get to work on fixing that while I still have air to think");
                 Display_Manager.addTextItem("On the opposite side of the ship you find the hydrolyzer", true);
                 Display_Manager.addTextItem("Oh no");
-                Display_Manager.addTextItem("It may be functional but the tank was ruptured in the crash");
+                Display_Manager.addTextItem("It might still be functional, but the tank was ruptured in the crash");
                 Display_Manager.addTextItem("That's why it's so damn wet back here", true);
                 Display_Manager.addTextItem("The leak will need to be patched before I can see if it's operational");
                 Display_Manager.addTextItem("But at least I've got an idea of when I'll die");
@@ -173,6 +182,9 @@ class Crash_Site {
                 button.addEventListener("click", this.buttonsPressed, false);
                 
                 break;
+            case 7:
+                console.log("CASE 7");
+                break;
 
         }
     }
@@ -184,24 +196,73 @@ class Crash_Site {
         switch(id) {
 
             case ButtonTypes.SCRAP_GATHER:
-                var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
-                GameTimer.AddEvent(metalEvent);
-                Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
+                Crash_Site.scavengeMetal();
                 break;
 
             case ButtonTypes.WIRE_GATHER:
-                var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
-                GameTimer.AddEvent(wiringEvent);
-                Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
+                Crash_Site.scavengeWire();
                 break;
 
             case ButtonTypes.MECHANICAL_GATHER:
-                var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 2);
-                GameTimer.AddEvent(mechEvent);
-                Display_Manager.addTextItem("You pick through the ship for Mechanical Parts", false, false, 2000);
+                Crash_Site.scavengeParts();
                 break;
             default:
                 alert("Not valid?");
+        }
+
+        var rs = Crash_Site.resources;
+        var count = rs.getItemCount(items.WIRING) + rs.getItemCount(items.SCRAP_METAL) + rs.getItemCount(items.MECHANICAL_PARTS) + rs.getItemCount(items.PLACEHOLDER);
+
+        if(count == 1){
+            Crash_Site.resources.removeItem(items.PLACEHOLDER, 1);
+        }
+        else if(count == 0){
+            Crash_Site.endOfDays();
+        }
+
+    }
+
+    static endOfDays(){
+        var button = Display_Manager.addEventButton("Take your next step", false);
+        button.addEventListener("click", progressLocation, false);
+    }
+
+    static scavengeMetal(){
+        
+        if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
+            var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
+            GameTimer.AddEvent(metalEvent);
+            Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
+        }
+        else{
+            Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
+            Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER);
+        }
+    }
+
+    static scavengeWire(){
+        if(Crash_Site.resources.removeItem(items.WIRING, 1)){
+            var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
+            GameTimer.AddEvent(wiringEvent);
+            Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
+        }
+        else{
+            Display_Manager.addTextItem("You check behind every panel, switch, and lever", false, false);
+            Display_Manager.addTextItem("but you cant find any more wires.", false, false);
+            Display_Manager.removeElement(ButtonTypes.WIRE_GATHER);
+        }
+    }
+
+    static scavengeParts(){
+        if(Crash_Site.resources.removeItem(items.MECHANICAL_PARTS, 1)){
+            var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1);
+            GameTimer.AddEvent(mechEvent);
+            Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
+        }
+        else{
+            Display_Manager.addTextItem("If you take any more mechanical parts from the ship", false, false);
+            Display_Manager.addTextItem("it just might collapse on you...", false, false);
+            Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER);
         }
     }
 
@@ -209,10 +270,5 @@ class Crash_Site {
         Display_Manager.setArtwork(asciiCrash)
     }
 }
-
-// Add item to player inventory per click
-function clickAccumulate(type) {
-    
- }
 
 export {Crash_Site}

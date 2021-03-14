@@ -7,9 +7,9 @@ const SPEEDS = {
     0: "Instant"
 };
 
-var fadeMultiplier = 2000;
-
 class Display_Manager{
+
+    static fadeMultiplier = 0;
 
     static _PlayerVitals = new Vitals(Resource_Manager.Player_Resources);
 
@@ -42,26 +42,26 @@ class Display_Manager{
         // Add text speed button
         var speedToggle = document.createElement("pre");
         speedToggle.setAttribute("id", "speed-toggle");
-        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
+        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[Display_Manager.fadeMultiplier] + " >";
         this.pageContent = document.getElementById("page-content");
         this.pageContent.appendChild(speedToggle);
         speedToggle.addEventListener("click", this.toggleSpeed);
     }
 
     toggleSpeed() {
-        switch (fadeMultiplier) {
+        switch (Display_Manager.fadeMultiplier) {
             case 0:
-                fadeMultiplier = 2000;
+                Display_Manager.fadeMultiplier = 2000;
                 break;
             case 2000:
-                fadeMultiplier = 1000;
+                Display_Manager.fadeMultiplier = 1000;
                 break;
             case 1000:
-                fadeMultiplier = 0;
+                Display_Manager.fadeMultiplier = 0;
                 break;
         }
         var speedToggle = document.getElementById("speed-toggle");
-        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[fadeMultiplier] + " >";
+        speedToggle.innerHTML = "< Text Speed: " + SPEEDS[Display_Manager.fadeMultiplier] + " >";
     }
 
     static updateDisplay(){
@@ -79,6 +79,10 @@ class Display_Manager{
 
     static updateInventory(rm){
         Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
+    }
+
+    static removeElement(elementID){
+        document.getElementById(elementID).remove();
     }
 
     // Set the current ASCII artwork
@@ -126,10 +130,13 @@ class Display_Manager{
     }
 
     // Add a button to the text display (center text area)
-    static addEventButton(buttonText) {
+    static addEventButton(buttonText, shouldHide = true) {
         var button = this.createButton(buttonText);
         button.setAttribute("class", "event-button");
-        button.style.display = "none";
+        if(shouldHide)
+        {
+            button.style.display = "none";
+        }
         Display_Manager.textDisplay.appendChild(button);
         return button;
     }
@@ -146,10 +153,23 @@ class Display_Manager{
         this.ascii = document.getElementById("ascii-art");
         if (this.ascii.style.visibility == "hidden")
             fadeIn(ascii, 30);
+        
         var textDisplayContents = Display_Manager.textDisplay.children;
 
-        for (var i = 0; i < textDisplayContents.length; i++) {
-            setTimeout(fadeIn, i * fadeMultiplier, textDisplayContents[i], 10);
+        if(textDisplayContents.length > 0)
+            setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10); //fades in first element
+
+        if(textDisplayContents.length > 1){
+            Display_Manager.fadeInEachElement(textDisplayContents, 1); //if there is more than one element then it starts fading in the rest 1 at a time
+        }
+        
+    }
+
+    static fadeInEachElement(elements, index) {
+        if(index != elements.length){ //if its not at the end of the list then add the element at the index, increment and call this funciton again
+            setTimeout(fadeIn, Display_Manager.fadeMultiplier, elements[index], 10);
+            index ++;
+            setTimeout(Display_Manager.fadeInEachElement, Display_Manager.fadeMultiplier, elements, index);
         }
     }
 
