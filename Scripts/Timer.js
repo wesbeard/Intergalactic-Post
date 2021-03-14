@@ -49,8 +49,8 @@ class GameTimer
         }
 
         console.log("Day: " + this.currentDay.toString() 
-                            + " Hour: " + this.currentHour.toString()
-                            + " Second: " + this.currentSecond.toString());
+                  + " Hour: " + this.currentHour.toString()
+                  + " Second: " + this.currentSecond.toString());
     }
 
     UpdateDisplay()
