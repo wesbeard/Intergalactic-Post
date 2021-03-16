@@ -27,22 +27,19 @@ startSequence();
 // starts the game
 function startSequence() {
     // Display the title text ASCII art as the title screen text, fades out after 3 seconds
-    _DisplayManager.displayTitleText(asciiTitle);
-    setTimeout(_DisplayManager.displayTitleText, 3000,"Sol 1", "8vh");
+    Display_Manager.displayTitleText(asciiTitle, ".7vw", true);
+    setTimeout(Display_Manager.displayTitleText, 3000,"Sol 1", "8vh", true);
     // Hide unused UI elements
-    var buttons = document.getElementById("buttons");
-    hideElement(buttons);
-    var resources = document.getElementById("resource-display");
-    hideElement(resources);
-    var vitals = document.getElementById("vitals");
-    hideElement(vitals);
-    var ascii = document.getElementById("ascii-art");
-    hideElement(ascii);
+    hideElement(document.getElementById("buttons"));
+    hideElement(document.getElementById("resource-display"));
+    hideElement(document.getElementById("vitals"));
+    hideElement(document.getElementById("ascii-art"));
+    hideElement(document.getElementById("time-display"));
     // Load content and start fading in
-    _DisplayManager.initOptions();
+    Display_Manager.initOptions();
     _CrashSite.loadLocation(6000);
     currentLocation = _CrashSite;
-    //setTimeout(fadeIn, 3000, content, 30);
+    setTimeout(fadeIn, 3000, content, 30);
 }
 
 // WIP: progress the current locations text display

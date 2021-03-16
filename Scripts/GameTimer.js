@@ -6,7 +6,7 @@ class GameTimer
     static shouldTick = true;
     static currentSecond = 0;
     static currentHour = 0;
-    static currentDay = 0;
+    static currentDay = 1;
 
     static EventQueue = [];
 
@@ -26,7 +26,7 @@ class GameTimer
     //setInterval(TimerLoop, 1000);
     TimerLoop()
     {
-        console.log("tick");
+        //console.log("tick");
 
         GameTimer.EventQueue.forEach(GameTimer.doIt);
 
@@ -38,15 +38,16 @@ class GameTimer
     {
         GameTimer.currentSecond++;
 
-        if (GameTimer.currentSecond == 120)
+        if (GameTimer.currentSecond == 15)
         {
             GameTimer.currentHour++
             GameTimer.currentSecond = 0;
         }
         
-        if (GameTimer.currentHour == 24)
+        if (GameTimer.currentHour == 10)
         {
             GameTimer.currentDay++;
+            Display_Manager.displayTitleText("Sol " + this.currentDay, "8vh");
             GameTimer.currentHour = 0;
         }
 

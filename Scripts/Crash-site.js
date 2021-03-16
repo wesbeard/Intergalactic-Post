@@ -2,7 +2,7 @@ import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {progressLocation} from './scripts.js'
 import {asciiCrash} from "./ASCII-Art.js"
-import {GameEvents, GiveItemEvent} from "./GameEvents.js"
+import {GameEvents, GiveItemEvent, GiveItemProgressEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
 
 var _ResourceManager = new Resource_Manager();
@@ -28,6 +28,7 @@ class Crash_Site {
     }
 
     loadLocation(fadeDelay = 6000) {
+        setTimeout(fadeIn, fadeDelay, document.getElementById("time-display"));
         Display_Manager.clearTextDisplay();
         Display_Manager.clearButtons();
         this.setText();
@@ -46,7 +47,6 @@ class Crash_Site {
 
         switch (this.stage) {
             case 4:
-                //console.log("here");
                 fadeIn(document.getElementById("vitals"), 20);
                 break;
             case 6:
@@ -174,12 +174,15 @@ class Crash_Site {
                 //This is how you add a button
                 button = Display_Manager.addButtonsButton("Gather Scrap", ButtonTypes.SCRAP_GATHER); //it takes the buttons name and the ID it will use
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.SCRAP_GATHER);
 
                 button = Display_Manager.addButtonsButton("Gather Wires", ButtonTypes.WIRE_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.WIRE_GATHER);
                 
                 button = Display_Manager.addButtonsButton("Gather Parts", ButtonTypes.MECHANICAL_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.MECHANICAL_GATHER);
                 
                 break;
             case 7:
@@ -191,7 +194,6 @@ class Crash_Site {
 
     buttonsPressed(value){
         var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
-        //console.log(id);
         
         switch(id) {
 
@@ -230,7 +232,7 @@ class Crash_Site {
     static scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
-            var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
+            var metalEvent = new GiveItemProgressEvent(3, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
         }
@@ -242,7 +244,7 @@ class Crash_Site {
 
     static scavengeWire(){
         if(Crash_Site.resources.removeItem(items.WIRING, 1)){
-            var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
+            var wiringEvent = new GiveItemProgressEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1, ButtonTypes.WIRE_GATHER);
             GameTimer.AddEvent(wiringEvent);
             Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
         }
@@ -255,7 +257,7 @@ class Crash_Site {
 
     static scavengeParts(){
         if(Crash_Site.resources.removeItem(items.MECHANICAL_PARTS, 1)){
-            var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1);
+            var mechEvent = new GiveItemProgressEvent(10, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1, ButtonTypes.MECHANICAL_GATHER);
             GameTimer.AddEvent(mechEvent);
             Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
         }
