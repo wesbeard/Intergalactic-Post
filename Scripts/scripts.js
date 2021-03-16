@@ -49,6 +49,7 @@ function progressLocation() {
     currentLocation.progress();
 }
 
+//Example of giveItemProgressEvent. its like a give item event but it also takes a progressBar that it will update each tick
 var testEvent = new GiveItemProgressEvent(50, Resource_Manager.Ship_Resources, items.PLACEHOLDER, 69, null);
 GameTimer.AddEvent(testEvent);
 
