@@ -231,6 +231,7 @@ class Crash_Site {
     static scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
             var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
@@ -244,11 +245,13 @@ class Crash_Site {
 
     static scavengeWire(){
         if(Crash_Site.resources.removeItem(items.WIRING, 1)){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
             var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
             GameTimer.AddEvent(wiringEvent);
             Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("You check behind every panel, switch, and lever", false, false);
             Display_Manager.addTextItem("but you cant find any more wires.", false, false);
             Display_Manager.removeElement(ButtonTypes.WIRE_GATHER);
@@ -257,11 +260,13 @@ class Crash_Site {
 
     static scavengeParts(){
         if(Crash_Site.resources.removeItem(items.MECHANICAL_PARTS, 1)){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
             var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1);
             GameTimer.AddEvent(mechEvent);
             Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("If you take any more mechanical parts from the ship", false, false);
             Display_Manager.addTextItem("it just might collapse on you...", false, false);
             Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER);
