@@ -1,5 +1,6 @@
 import {items, Resource_Manager} from "./ResourceManager.js";
 import { GameTimer } from "./GameTimer.js";
+import {Display_Manager} from "./DisplayManager.js";
 
 /*
 Default Game event that acts as a superclass for the other game events
@@ -46,7 +47,6 @@ class GiveItemEvent extends GameEvents {
     }
 }
 
-
 /*
 This is an extention of the GiveItemEvent that will update a given progress bar element
 designed to be used by the buttons buttons
@@ -54,17 +54,15 @@ designed to be used by the buttons buttons
 class GiveItemProgressEvent extends GiveItemEvent{
     constructor(maxTicks, resourceManager, item, amount, progressBar){
         super(maxTicks, resourceManager, item, amount);
-        this.progressBar = progressBar;
+        this.progressBar = progressBar + "-progress";
+
         this.total = maxTicks;
     }
 
     decrimentTick(){
         super.decrimentTick();
         var percentage = Math.floor((this.total-this.ticks) / this.total * 100);
-        console.log("percentage: " + percentage + "%");
-
-        //this function doesnt exist yet
-        //Display_Manager.updateProgressBar(this.progressBar, this.percentage);
+        Display_Manager.updateProgressBar(this.progressBar, percentage);
     }
 }
 

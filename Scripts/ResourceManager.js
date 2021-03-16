@@ -127,7 +127,6 @@ class Resource_Manager{
             return desc;
         }
     }
-
 }
 
 export {Resource_Manager, items}
