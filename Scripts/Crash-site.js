@@ -4,6 +4,7 @@ import {progressLocation} from './scripts.js'
 import {asciiCrash} from "./ASCII-Art.js"
 import {GameEvents, GiveItemEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
+import {Audio_Manager, Sounds} from "./AudioManager.js";
 
 var _ResourceManager = new Resource_Manager();
 
@@ -235,6 +236,7 @@ class Crash_Site {
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER);
         }
