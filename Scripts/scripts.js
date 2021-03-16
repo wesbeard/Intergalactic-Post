@@ -27,7 +27,7 @@ startSequence();
 function startSequence() {
     // Display the title text ASCII art as the title screen text, fades out after 3 seconds
     Display_Manager.displayTitleText(asciiTitle, ".7vw", true);
-    setTimeout(Display_Manager.displayTitleText, 3000,"Sol 1", "8vh", true);
+    setTimeout(Display_Manager.displayTitleText, 3000,"Sol 🌣 1", "8vh", true);
     // Hide unused UI elements
     hideElement(document.getElementById("buttons"));
     hideElement(document.getElementById("resource-display"));

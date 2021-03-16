@@ -168,7 +168,7 @@ class Crash_Site {
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 5:
-                button = Display_Manager.addEventButton("Scavenge scrap");
+                button = Display_Manager.addEventButton("Scavenge for resources");
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 6:

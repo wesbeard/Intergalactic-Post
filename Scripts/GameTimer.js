@@ -38,16 +38,16 @@ class GameTimer
     {
         GameTimer.currentSecond++;
 
-        if (GameTimer.currentSecond == 15)
+        if (GameTimer.currentSecond == 3)
         {
             GameTimer.currentHour++
             GameTimer.currentSecond = 0;
         }
         
-        if (GameTimer.currentHour == 10)
+        if (GameTimer.currentHour == 50)
         {
             GameTimer.currentDay++;
-            Display_Manager.displayTitleText("Sol " + this.currentDay, "8vh");
+            Display_Manager.displayTitleText("Sol 🌣 " + this.currentDay, "8vh");
             GameTimer.currentHour = 0;
         }
 

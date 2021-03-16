@@ -141,7 +141,7 @@ class Display_Manager{
         barString += "]";
         progressBar.innerHTML = barString;
         if (percentage >= 100) {
-            setTimeout(this.updateProgressBar, 100, progressID, 0);
+            setTimeout(this.updateProgressBar, 500, progressID, 0);
         }
     }
 
