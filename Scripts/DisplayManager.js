@@ -10,7 +10,7 @@ const SPEEDS = {
 
 class Display_Manager{
 
-    static fadeMultiplier = 0;
+    static fadeMultiplier = 2000;
 
     static _PlayerVitals = new Vitals(Resource_Manager.Player_Resources);
 
@@ -57,6 +57,7 @@ class Display_Manager{
         this.pageContent = document.getElementById("page-content");
         this.pageContent.appendChild(speedToggle);
         speedToggle.addEventListener("click", this.toggleSpeed);
+        speedToggle.style.display = "none";
     }
 
     static toggleSpeed() {
@@ -198,11 +199,14 @@ class Display_Manager{
         
         var textDisplayContents = Display_Manager.textDisplay.children;
 
-        if(textDisplayContents.length > 0)
-            setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10); //fades in first element
-
-        if(textDisplayContents.length > 1){
-            Display_Manager.fadeInEachElement(textDisplayContents, 1); //if there is more than one element then it starts fading in the rest 1 at a time
+        if(textDisplayContents.length > 1) {
+            //if there is more than one element then it starts fading in the rest 1 at a time
+            Display_Manager.fadeInEachElement(textDisplayContents, 1);
+            
+        }
+        else if(textDisplayContents.length > 0){
+            //fades in first element if there's only one
+            setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10);
         }
         
     }

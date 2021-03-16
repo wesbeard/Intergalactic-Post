@@ -30,6 +30,7 @@ class Crash_Site {
 
     loadLocation(fadeDelay = 6000) {
         setTimeout(fadeIn, fadeDelay, document.getElementById("time-display"));
+        setTimeout(fadeIn, fadeDelay, document.getElementById("speed-toggle"));
         Display_Manager.clearTextDisplay();
         Display_Manager.clearButtons();
         this.setText();
