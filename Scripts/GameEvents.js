@@ -46,4 +46,21 @@ class GiveItemEvent extends GameEvents {
     }
 }
 
-export{GameEvents, GiveItemEvent}
+class GiveItemProgressEvent extends GiveItemEvent{
+    constructor(maxTicks, resourceManager, item, amount, progressBar){
+        super(maxTicks, resourceManager, item, amount);
+        this.progressBar = progressBar;
+        this.total = maxTicks;
+    }
+
+    decrimentTick(){
+        super.decrimentTick();
+        var percentage = Math.floor((this.total-this.ticks) / this.total * 100);
+        console.log("percentage: " + percentage + "%");
+
+        //this function doesnt exist yet
+        //Display_Manager.updateProgressBar(this.progressBar, this.percentage);
+    }
+}
+
+export{GameEvents, GiveItemEvent, GiveItemProgressEvent}
