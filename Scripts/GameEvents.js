@@ -46,6 +46,11 @@ class GiveItemEvent extends GameEvents {
     }
 }
 
+
+/*
+This is an extention of the GiveItemEvent that will update a given progress bar element
+designed to be used by the buttons buttons
+ */
 class GiveItemProgressEvent extends GiveItemEvent{
     constructor(maxTicks, resourceManager, item, amount, progressBar){
         super(maxTicks, resourceManager, item, amount);
