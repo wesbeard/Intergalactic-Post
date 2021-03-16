@@ -55,6 +55,7 @@ class GiveItemProgressEvent extends GiveItemEvent{
     constructor(maxTicks, resourceManager, item, amount, progressBar){
         super(maxTicks, resourceManager, item, amount);
         this.progressBar = progressBar + "-progress";
+
         this.total = maxTicks;
     }
 

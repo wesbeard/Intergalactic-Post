@@ -54,6 +54,7 @@ button:hover {
 .action-button {
     margin: 0;
     cursor: pointer;
+    user-select: none;
 }
 
 .progress-bar {
@@ -102,6 +103,7 @@ button:hover {
     text-align: center;
     justify-content: center;
     cursor: pointer;
+    user-select: none;
 }
 
 #ascii-art {

@@ -4,8 +4,7 @@ import {asciiTitle} from "./ASCII-Art.js";
 import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
 import {GameTimer} from "./GameTimer.js";
 
-//unused
-//import {GameEvents, GiveItemEvent} from "./GameEvents.js";
+import {GiveItemProgressEvent} from "./GameEvents.js";
 
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
@@ -46,5 +45,9 @@ function startSequence() {
 function progressLocation() {
     currentLocation.progress();
 }
+
+//Example of giveItemProgressEvent. its like a give item event but it also takes a progressBar that it will update each tick
+var testEvent = new GiveItemProgressEvent(50, Resource_Manager.Ship_Resources, items.PLACEHOLDER, 69, null);
+GameTimer.AddEvent(testEvent);
 
 export {progressLocation}
