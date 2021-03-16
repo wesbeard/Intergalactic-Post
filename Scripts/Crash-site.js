@@ -243,6 +243,7 @@ class Crash_Site {
             Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER);
+            Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER+"-progress");
         }
     }
 
@@ -258,6 +259,7 @@ class Crash_Site {
             Display_Manager.addTextItem("You check behind every panel, switch, and lever", false, false);
             Display_Manager.addTextItem("but you cant find any more wires.", false, false);
             Display_Manager.removeElement(ButtonTypes.WIRE_GATHER);
+            Display_Manager.removeElement(ButtonTypes.WIRE_GATHER+"-progress");
         }
     }
 
@@ -273,6 +275,7 @@ class Crash_Site {
             Display_Manager.addTextItem("If you take any more mechanical parts from the ship", false, false);
             Display_Manager.addTextItem("it just might collapse on you...", false, false);
             Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER);
+            Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER+"-progress");
         }
     }
 
