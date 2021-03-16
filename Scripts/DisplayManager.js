@@ -133,7 +133,7 @@ class Display_Manager{
         var barString = "[";
         for (var i = 1; i <= 10; i++){
             if (i <= percentage / 10) {
-                barString += "==";
+                barString += "◄►";
             }
             else {
                 barString += "  ";
