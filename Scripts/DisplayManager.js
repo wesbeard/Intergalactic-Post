@@ -1,5 +1,6 @@
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
+import {GameTimer} from "./GameTimer.js"
 
 const SPEEDS = {
     2000: "Slow",
@@ -9,7 +10,7 @@ const SPEEDS = {
 
 class Display_Manager{
 
-    static fadeMultiplier = 0;
+    static fadeMultiplier = 2000;
 
     static _PlayerVitals = new Vitals(Resource_Manager.Player_Resources);
 
@@ -21,24 +22,34 @@ class Display_Manager{
     static asciiArt = document.getElementById("ascii-art");
     static resourceDisplay = document.getElementById("resource-display");
     static titleText = document.getElementById("title-text");
+    static timeDisplay = document.getElementById("time-display");
+    static currentTime = document.getElementById("current-time");
 
     // Set the title text, can be used for main title as well as day changes
-    displayTitleText(text, fontSize = ".7vw") {
+    static displayTitleText(text, fontSize = ".7vw", start = false) {
         // Hide main page content
         var content = document.getElementById("page-content");
-        toggleHideUI(content);
+        fadeOut(content, 20);
         // Set title text
         Display_Manager.titleText = document.getElementById("title-text");
         Display_Manager.titleText.style.fontSize = fontSize;
         Display_Manager.titleText.innerHTML = text;
         // fade in title
-        fadeIn(title, 20);
-        // Schedule fadeout for 3 seconds later
-        setTimeout(fadeOut, 2000, title, 20);
+        // if start sequence, start immediately
+        if (start) {
+            fadeIn(title, 20);
+            setTimeout(fadeOut, 2000, title, 20);
+        }
+        // else, wait to fade in and re-fade content
+        else {
+            setTimeout(fadeIn, 1000, title, 20);
+            setTimeout(fadeOut, 3000, title, 20);
+            setTimeout(fadeIn, 4000, content, 20);
+        }
     }
 
     // Any non-gameplay display elements can go here
-    initOptions() {
+    static initOptions() {
         // Add text speed button
         var speedToggle = document.createElement("pre");
         speedToggle.setAttribute("id", "speed-toggle");
@@ -46,9 +57,10 @@ class Display_Manager{
         this.pageContent = document.getElementById("page-content");
         this.pageContent.appendChild(speedToggle);
         speedToggle.addEventListener("click", this.toggleSpeed);
+        speedToggle.style.display = "none";
     }
 
-    toggleSpeed() {
+    static toggleSpeed() {
         switch (Display_Manager.fadeMultiplier) {
             case 0:
                 Display_Manager.fadeMultiplier = 2000;
@@ -67,6 +79,7 @@ class Display_Manager{
     static updateDisplay(){
         Display_Manager.updateInventory(Resource_Manager.Ship_Resources);
         Display_Manager.updateVitals();
+        Display_Manager.updateTimeDisplay();
     }
 
     //will update the vitals card to the most current condition
@@ -77,8 +90,12 @@ class Display_Manager{
         Display_Manager.vitals.innerHTML = newVitals;
     }
 
-    static updateInventory(rm){
+    static updateInventory(rm) {
         Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
+    }
+
+    static updateTimeDisplay() {
+        this.currentTime.innerHTML = "Sol 🌣 " + GameTimer.currentDay + " Luna ☽ " + GameTimer.currentHour;
     }
 
     static removeElement(elementID){
@@ -93,7 +110,7 @@ class Display_Manager{
         Display_Manager.asciiArt.appendChild(pre);
     }
 
-    static addButtonsButton(buttonText, buttonID){
+    static addButtonsButton(buttonText, buttonID) {
         var button = Display_Manager.createButton(buttonText);
         button.setAttribute("class", "action-button");
         button.setAttribute("id", buttonID);
@@ -103,7 +120,33 @@ class Display_Manager{
         return button;
     }
 
-    static clearButtons(){
+    static addProgressBar(buttonID) {
+        var progressBar = document.createElement("pre");
+        progressBar.innerHTML = "[                    ]";
+        progressBar.setAttribute("id", buttonID + "-progress");
+        progressBar.setAttribute("class", "progress-bar");
+        Display_Manager.buttons.appendChild(progressBar);
+    }
+
+    static updateProgressBar(progressID, percentage) {
+        var progressBar = document.getElementById(progressID);
+        var barString = "[";
+        for (var i = 1; i <= 10; i++){
+            if (i <= percentage / 10) {
+                barString += "◄►";
+            }
+            else {
+                barString += "  ";
+            }
+        }
+        barString += "]";
+        progressBar.innerHTML = barString;
+        if (percentage >= 100) {
+            setTimeout(this.updateProgressBar, 500, progressID, 0);
+        }
+    }
+
+    static clearButtons() {
         while (Display_Manager.buttons.firstChild) {
             Display_Manager.buttons.removeChild(Display_Manager.buttons.firstChild);
         }
@@ -152,15 +195,18 @@ class Display_Manager{
     static fadeInTextDisplay() {
         this.ascii = document.getElementById("ascii-art");
         if (this.ascii.style.visibility == "hidden")
-            fadeIn(ascii, 30);
+            fadeIn(ascii, 10);
         
         var textDisplayContents = Display_Manager.textDisplay.children;
 
-        if(textDisplayContents.length > 0)
-            setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10); //fades in first element
-
-        if(textDisplayContents.length > 1){
-            Display_Manager.fadeInEachElement(textDisplayContents, 1); //if there is more than one element then it starts fading in the rest 1 at a time
+        if(textDisplayContents.length > 1) {
+            //if there is more than one element then it starts fading in the rest 1 at a time
+            Display_Manager.fadeInEachElement(textDisplayContents, 1);
+            
+        }
+        else if(textDisplayContents.length > 0){
+            //fades in first element if there's only one
+            setTimeout(fadeIn, Display_Manager.fadeMultiplier, textDisplayContents[0], 10);
         }
         
     }

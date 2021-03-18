@@ -11,6 +11,8 @@
   <script type="module" src="./Scripts/ResourceManager.js"></script>
   <script type="module" src="./Scripts/scripts.js"></script>
   <script type="module" src="./Scripts/Crash-site.js"></script>
+  <audio id="bad-boop" src="./Resources/bad-boop.ogg">AUDIO NOT SUPPORTED</audio>
+  <audio id="good-boop" src="./Resources/good-boop.ogg">AUDIO NOT SUPPORTED</audio>
 
 </head>
 
@@ -23,24 +25,27 @@
   <!-- All page content aligned as a row -->
   <div id="page-content">
 
+    <!-- Displays all action buttons for things like gathering Resources-->
     <div id="buttons">
-      <!-- Add buttons as more resource gathering options are unlocked, likely start with 1 -->
-      <!-- <button class="action-button", id = "metal-gather", onclick="clickAccumulate(this)">Gather scrap metal</button>
-      <button class="action-button", id = "wiring-gather", onclick="clickAccumulate(this)">Collect wiring</button>
-      <button class="action-button", id = "mechanical-gather", onclick="clickAccumulate(this)">Scavenge for mechanical parts</button> -->
+      <!-- Buttons inserted here -->
     </div>
 
     <!-- All center options such as vitals display, text, and ASCII art aligned as a column-->
     <div id="center-column">
 
+      <div id="time-display">
+        <!-- Time display inserted by JS here -->
+        <pre id="current-time"></pre>
+      </div>
+
       <div id="vitals">
-        <!--These could blink red when critical -->
+        <!--are red when critical -->
         <!-- Vitals display inserted by JS -->
       </div>
 
       <div id="text-display">
         
-        <!-- Location text and buttons inserted by JS here -->
+        <!-- Location text and event buttons inserted by JS here -->
         <!-- Each text item uses the class "text-item" -->
         <!-- Buttons use the class "event-button" -->
         

@@ -2,8 +2,9 @@ import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {progressLocation} from './scripts.js'
 import {asciiCrash} from "./ASCII-Art.js"
-import {GameEvents, GiveItemEvent} from "./GameEvents.js"
+import {GameEvents, GiveItemEvent, GiveItemProgressEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
+import {Audio_Manager, Sounds} from "./AudioManager.js";
 
 var _ResourceManager = new Resource_Manager();
 
@@ -30,6 +31,8 @@ class Crash_Site {
     }
 
     loadLocation(fadeDelay = 6000) {
+        setTimeout(fadeIn, fadeDelay, document.getElementById("time-display"));
+        setTimeout(fadeIn, fadeDelay, document.getElementById("speed-toggle"));
         Display_Manager.clearTextDisplay();
         Display_Manager.clearButtons();
         this.setText();
@@ -48,7 +51,6 @@ class Crash_Site {
 
         switch (this.stage) {
             case 4:
-                //console.log("here");
                 fadeIn(document.getElementById("vitals"), 20);
                 break;
             case 6:
@@ -169,25 +171,30 @@ class Crash_Site {
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 5:
-                button = Display_Manager.addEventButton("Scavenge scrap");
+                button = Display_Manager.addEventButton("Scavenge for resources");
                 button.addEventListener("click", progressLocation, false);
                 break;
             case 6:
                 //This is how you add a button
                 button = Display_Manager.addButtonsButton("Gather Scrap", ButtonTypes.SCRAP_GATHER); //it takes the buttons name and the ID it will use
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.SCRAP_GATHER);
 
                 button = Display_Manager.addButtonsButton("Gather Wires", ButtonTypes.WIRE_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.WIRE_GATHER);
                 
                 button = Display_Manager.addButtonsButton("Gather Parts", ButtonTypes.MECHANICAL_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.MECHANICAL_GATHER);
 
                 button = Display_Manager.addButtonsButton("Gather Food", ButtonTypes.FOOD_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.FOOD_GATHER);
 
                 button = Display_Manager.addButtonsButton("Gather Water", ButtonTypes.WATER_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.WATER_GATHER);
                 
                 break;
             case 7:
@@ -199,7 +206,6 @@ class Crash_Site {
 
     buttonsPressed(value){
         var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
-        //console.log(id);
         
         switch(id) {
 
@@ -244,69 +250,96 @@ class Crash_Site {
     static scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
-            var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            var metalEvent = new GiveItemProgressEvent(3, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
             Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 10);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 5);
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER);
+            Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER+"-progress");
         }
     }
 
     static scavengeWire(){
         if(Crash_Site.resources.removeItem(items.WIRING, 1)){
-            var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            var wiringEvent = new GiveItemProgressEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1, ButtonTypes.WIRE_GATHER);
             GameTimer.AddEvent(wiringEvent);
             Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
             Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 10);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 5);
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("You check behind every panel, switch, and lever", false, false);
             Display_Manager.addTextItem("but you cant find any more wires.", false, false);
             Display_Manager.removeElement(ButtonTypes.WIRE_GATHER);
+            Display_Manager.removeElement(ButtonTypes.WIRE_GATHER+"-progress");
         }
     }
 
     static scavengeParts(){
         if(Crash_Site.resources.removeItem(items.MECHANICAL_PARTS, 1)){
-            var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1);
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            var mechEvent = new GiveItemProgressEvent(10, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1, ButtonTypes.MECHANICAL_GATHER);
             GameTimer.AddEvent(mechEvent);
             Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
             Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 10);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 5);
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("If you take any more mechanical parts from the ship", false, false);
             Display_Manager.addTextItem("it just might collapse on you...", false, false);
             Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER);
+            Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER+"-progress");
         }
     }
 
     static scavengeFood(){
-        if (Crash_Site.resources.removeItem(items.FOOD, 5)){
-        var foodEvent = new GiveItemEvent(5, Resource_Manager.Player_Resources, items.FOOD, 10);
-        GameTimer.AddEvent(foodEvent);
-        Display_Manager.addTextItem("You manage to find some food", false, false, 2000);
+        if (Crash_Site.resources.removeItem(items.FOOD, 1)){
+            if (Resource_Manager.Player_Resources.getItemCount(items.FOOD) < 100){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            var foodEvent = new GiveItemProgressEvent(10, Resource_Manager.Player_Resources, items.FOOD, 5, ButtonTypes.FOOD_GATHER);
+            GameTimer.AddEvent(foodEvent);
+            Display_Manager.addTextItem("You manage to find some food", false, false, 2000);
+            }
+            else{
+                Audio_Manager.playSound(Sounds.BAD_BOOP);
+                Display_Manager.addTextItem("You are so full, you couldn't eat another bite", false, false, 2000);
+            }
         }
         else{
-            Display_Manager.addTextItem("The best you could find is some dust...", false, false);
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
+            Display_Manager.addTextItem("The best you could find is some crumbs...", false, false);
             Display_Manager.removeElement(ButtonTypes.FOOD_GATHER);
+            Display_Manager.removeElement(ButtonTypes.FOOD_GATHER+"-progress");
         }
     }
 
     static scavengeWater(){
-        if (Crash_Site.resources.removeItem(items.WATER, 5)){
-        var waterEvent = new GiveItemEvent(5, Resource_Manager.Player_Resources, items.WATER, 15);
-        GameTimer.AddEvent(waterEvent);
-        Display_Manager.addTextItem("You manage to find water", false, false, 2000);
+        if (Crash_Site.resources.removeItem(items.WATER, 1)){
+            if (Resource_Manager.Player_Resources.getItemCount(items.WATER) < 100){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            var waterEvent = new GiveItemEvent(5, Resource_Manager.Player_Resources, items.WATER, 5);
+            GameTimer.AddEvent(waterEvent);
+            Display_Manager.addTextItem("You manage to find water", false, false, 2000);
+            }
+            else{
+                Audio_Manager.playSound(Sounds.BAD_BOOP);
+                Display_Manager.addTextItem("You are thoroughly quenched", false, false, 2000);
+            }
         }
         else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
             Display_Manager.addTextItem("You try to find more water, but couldn't", false, false);  
             Display_Manager.removeElement(ButtonTypes.WATER_GATHER);
+            Display_Manager.removeElement(ButtonTypes.WATER_GATHER+"-progress");
         }
     }
 
