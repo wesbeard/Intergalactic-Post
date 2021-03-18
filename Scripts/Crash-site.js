@@ -10,7 +10,9 @@ var _ResourceManager = new Resource_Manager();
 const ButtonTypes = {
     SCRAP_GATHER : 'scrap-gather',
     MECHANICAL_GATHER : 'mechanical-gather',
-    WIRE_GATHER : 'wire-gather'
+    WIRE_GATHER : 'wire-gather',
+    FOOD_GATHER : 'food-gather',
+    WATER_GATHER : 'water-gather'
 };
 
 class Crash_Site {
@@ -19,7 +21,7 @@ class Crash_Site {
 
     constructor(){
         this.stage = 1;
-        Crash_Site.resources.addItem(items.FOOD, 20);
+        Crash_Site.resources.addItem(items.FOOD, 35);
         Crash_Site.resources.addItem(items.WATER, 35);
         Crash_Site.resources.addItem(items.MECHANICAL_PARTS, 10);
         Crash_Site.resources.addItem(items.WIRING, 15);
@@ -180,6 +182,12 @@ class Crash_Site {
                 
                 button = Display_Manager.addButtonsButton("Gather Parts", ButtonTypes.MECHANICAL_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
+
+                button = Display_Manager.addButtonsButton("Gather Food", ButtonTypes.FOOD_GATHER);
+                button.addEventListener("click", this.buttonsPressed, false);
+
+                button = Display_Manager.addButtonsButton("Gather Water", ButtonTypes.WATER_GATHER);
+                button.addEventListener("click", this.buttonsPressed, false);
                 
                 break;
             case 7:
@@ -205,6 +213,12 @@ class Crash_Site {
 
             case ButtonTypes.MECHANICAL_GATHER:
                 Crash_Site.scavengeParts();
+                break;
+            case ButtonTypes.FOOD_GATHER:
+                Crash_Site.scavengeFood();
+                break;
+            case ButtonTypes.WATER_GATHER:
+                Crash_Site.scavengeWater();
                 break;
             default:
                 alert("Not valid?");
@@ -233,6 +247,8 @@ class Crash_Site {
             var metalEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
+            Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 10);
         }
         else{
             Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
@@ -245,6 +261,8 @@ class Crash_Site {
             var wiringEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1);
             GameTimer.AddEvent(wiringEvent);
             Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
+            Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 10);
         }
         else{
             Display_Manager.addTextItem("You check behind every panel, switch, and lever", false, false);
@@ -258,11 +276,37 @@ class Crash_Site {
             var mechEvent = new GiveItemEvent(5, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1);
             GameTimer.AddEvent(mechEvent);
             Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
+            Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 10);
         }
         else{
             Display_Manager.addTextItem("If you take any more mechanical parts from the ship", false, false);
             Display_Manager.addTextItem("it just might collapse on you...", false, false);
             Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER);
+        }
+    }
+
+    static scavengeFood(){
+        if (Crash_Site.resources.removeItem(items.FOOD, 5)){
+        var foodEvent = new GiveItemEvent(5, Resource_Manager.Player_Resources, items.FOOD, 10);
+        GameTimer.AddEvent(foodEvent);
+        Display_Manager.addTextItem("You manage to find some food", false, false, 2000);
+        }
+        else{
+            Display_Manager.addTextItem("The best you could find is some dust...", false, false);
+            Display_Manager.removeElement(ButtonTypes.FOOD_GATHER);
+        }
+    }
+
+    static scavengeWater(){
+        if (Crash_Site.resources.removeItem(items.WATER, 5)){
+        var waterEvent = new GiveItemEvent(5, Resource_Manager.Player_Resources, items.WATER, 15);
+        GameTimer.AddEvent(waterEvent);
+        Display_Manager.addTextItem("You manage to find water", false, false, 2000);
+        }
+        else{
+            Display_Manager.addTextItem("You try to find more water, but couldn't", false, false);  
+            Display_Manager.removeElement(ButtonTypes.WATER_GATHER);
         }
     }
 
