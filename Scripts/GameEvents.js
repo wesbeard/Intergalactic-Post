@@ -1,7 +1,6 @@
 import {items, Resource_Manager} from "./ResourceManager.js";
 import { GameTimer } from "./GameTimer.js";
 import {Display_Manager} from "./DisplayManager.js";
-
 /*
 Default Game event that acts as a superclass for the other game events
 */
@@ -66,4 +65,25 @@ class GiveItemProgressEvent extends GiveItemEvent{
     }
 }
 
-export{GameEvents, GiveItemEvent, GiveItemProgressEvent}
+/*
+This event will disable a button for a given amount of ticks
+*/
+class DisableButtonEvent extends GameEvents{
+    constructor(maxTicks, buttonID, func){
+        console.log("IN EVENT");
+        super(maxTicks);
+        this.button = document.getElementById(buttonID);
+        this.func = func;
+        //console.log(buttonID);
+        this.button.removeEventListener("click", func);
+        
+    }
+
+    executeEvent(){
+        this.button.addEventListener("click", this.func, false);
+        super.executeEvent();
+    }
+}
+
+
+export{GameEvents, GiveItemEvent, GiveItemProgressEvent, DisableButtonEvent}
