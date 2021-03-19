@@ -202,8 +202,13 @@ class Crash_Site {
             Resource_Manager.Player_Resources.removeItem(items.WATER, 1);
             Resource_Manager.Player_Resources.removeItem(items.AIR, 1);
 
-            if (Resource_Manager.Player_Resources.getItemCount(items.SCRAP_METAL) >= 10) {
-
+            // Move into an event or something later idk
+            console.log(Resource_Manager.Player_Resources.getItemCount(items.SCRAP_METAL));
+            if (Resource_Manager.Player_Resources.getItemCount(items.SCRAP_METAL) == 5) {
+                Display_Manager.addTextItem("Fix your life support");
+                Display_Manager.addTextItem("This will make your vitals replenish 20% every day");
+                var repairButton = Display_Manager.addEventButton("Repair");
+                repairButton.addEventListener("click", this.upgradeLifeSupport, false);
             }
             
             switch(id) {
@@ -229,6 +234,11 @@ class Crash_Site {
         }
     }
 
+    // I don't know where this should go
+    upgradeLifeSupport() {
+        Resource_Manager.Player_Resources.vitalsReplenishRate += 10;
+    }
+
     static scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
@@ -239,7 +249,7 @@ class Crash_Site {
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
-            Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
+            Display_Manager.addTextItem("You cant find any more scrap around the ship", false, false);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER+"-progress");
         }

@@ -20,6 +20,7 @@ class Resource_Manager{
     static Ship_Resources = new Resource_Manager();
 
     vitalsCap = 100;
+    vitalsReplenishRate = 10;
 
     constructor(){
         this.inventory = {};
