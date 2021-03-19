@@ -95,6 +95,7 @@ class Display_Manager{
     static upgradeLifeSupport() {
         Vitals_Resource_Manager.vitalsReplenishRate += 10;
         Display_Manager.clearTextDisplay();
+        Display_Manager.addTextItem("Life support systems upgraded!", false, false, 2000);
     }
 
     static updateInventory(rm) {

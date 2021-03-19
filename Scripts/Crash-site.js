@@ -192,14 +192,15 @@ class Crash_Site extends Location{
                 button = Display_Manager.addButtonsButton("Gather Parts", ButtonTypes.MECHANICAL_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
                 Display_Manager.addProgressBar(ButtonTypes.MECHANICAL_GATHER);
-
+                
+                // These should be changed into another feature
                 button = Display_Manager.addButtonsButton("Gather Food", ButtonTypes.FOOD_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
-                Display_Manager.addProgressBar(ButtonTypes.FOOD_GATHER);
+                //Display_Manager.addProgressBar(ButtonTypes.FOOD_GATHER);
 
                 button = Display_Manager.addButtonsButton("Gather Water", ButtonTypes.WATER_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
-                Display_Manager.addProgressBar(ButtonTypes.WATER_GATHER);
+                //Display_Manager.addProgressBar(ButtonTypes.WATER_GATHER);
                 
                 break;
             case 7:
