@@ -227,13 +227,13 @@ class Crash_Site extends Location{
             switch(id) {
 
                 case ButtonTypes.MECHANICAL_GATHER:
-                    Crash_Site.scavengeParts();
+                    Crash_Site.CS.scavengeParts();
                     break;
                 case ButtonTypes.FOOD_GATHER:
-                    Crash_Site.scavengeFood();
+                    Crash_Site.CS.scavengeFood();
                     break;
                 case ButtonTypes.WATER_GATHER:
-                    Crash_Site.scavengeWater();
+                    Crash_Site.CS.scavengeWater();
                     break;
                 case ButtonTypes.SCRAP_GATHER:
                     Crash_Site.CS.scavengeMetal();
@@ -264,7 +264,6 @@ class Crash_Site extends Location{
             GameTimer.AddEvent(metalEvent);
             var stopButton = new DisableButtonEvent(2, ButtonTypes.SCRAP_GATHER, this.buttonsPressed);
             GameTimer.AddEvent(stopButton);
-
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
         }
         else{
@@ -311,7 +310,7 @@ class Crash_Site extends Location{
         }
     }
 
-    static scavengeFood(){
+    scavengeFood(){
         if (Crash_Site.resources.removeItem(items.FOOD, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
             Vitals_Resource_Manager.Player_Vitals.addItem(items.FOOD, 5);
@@ -325,7 +324,7 @@ class Crash_Site extends Location{
         }
     }
 
-    static scavengeWater(){
+    scavengeWater(){
         if (Crash_Site.resources.removeItem(items.WATER, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
             Vitals_Resource_Manager.Player_Vitals.addItem(items.WATER, 5);
