@@ -90,6 +90,12 @@ class Display_Manager{
         Display_Manager.vitals.innerHTML = newVitals;
     }
 
+    // I don't know where this should go
+    static upgradeLifeSupport() {
+        Resource_Manager.Player_Resources.vitalsReplenishRate += 10;
+        Display_Manager.clearTextDisplay();
+    }
+
     static updateInventory(rm) {
         Display_Manager.resourceDisplay.innerHTML = rm.htmlDescription;
     }

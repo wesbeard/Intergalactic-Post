@@ -203,12 +203,11 @@ class Crash_Site {
             Resource_Manager.Player_Resources.removeItem(items.AIR, 1);
 
             // Move into an event or something later idk
-            console.log(Resource_Manager.Player_Resources.getItemCount(items.SCRAP_METAL));
-            if (Resource_Manager.Player_Resources.getItemCount(items.SCRAP_METAL) == 5) {
-                Display_Manager.addTextItem("Fix your life support");
-                Display_Manager.addTextItem("This will make your vitals replenish 20% every day");
-                var repairButton = Display_Manager.addEventButton("Repair");
-                repairButton.addEventListener("click", this.upgradeLifeSupport, false);
+            if (Resource_Manager.Ship_Resources.getItemCount(items.SCRAP_METAL) == 4) {
+                Display_Manager.addTextItem("Fix your life support", false, false, 0);
+                Display_Manager.addTextItem("This will make your vitals replenish 20% every day", false, false, 0);
+                var repairButton = Display_Manager.addEventButton("Repair", false);
+                repairButton.addEventListener("click", Display_Manager.upgradeLifeSupport, false);
             }
             
             switch(id) {
@@ -232,11 +231,6 @@ class Crash_Site {
             Display_Manager.addTextItem("Shouldn't gather any more today...", false, false, 0);
             Display_Manager.addTextItem("I need to wait for life support to regenerate", false, false, 0);
         }
-    }
-
-    // I don't know where this should go
-    upgradeLifeSupport() {
-        Resource_Manager.Player_Resources.vitalsReplenishRate += 10;
     }
 
     static scavengeMetal(){
