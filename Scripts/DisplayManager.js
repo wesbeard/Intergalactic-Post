@@ -2,6 +2,8 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 import {GameTimer} from "./GameTimer.js"
 import { Vitals_Resource_Manager } from "./VitalsResouceManager.js";
+import { Crash_Site } from "./Crash-site.js";
+import { currentLocation} from "./scripts.js"
 
 const SPEEDS = {
     2000: "Slow",
@@ -11,7 +13,7 @@ const SPEEDS = {
 
 class Display_Manager{
 
-    static fadeMultiplier = 0;
+    static fadeMultiplier = 2000;
 
     static _PlayerVitals = new Vitals(Vitals_Resource_Manager.Player_Vitals);
 
@@ -95,7 +97,10 @@ class Display_Manager{
     static upgradeLifeSupport() {
         Vitals_Resource_Manager.vitalsReplenishRate += 10;
         Display_Manager.clearTextDisplay();
-        Display_Manager.addTextItem("Life support systems upgraded!", false, false, 2000);
+
+        if (currentLocation.getStage() == 7) {
+            currentLocation.progress();
+        }
     }
 
     static updateInventory(rm) {
@@ -298,12 +303,17 @@ function fadeIn(element, duration) {
     }, duration);
 }
 
-function fadeOut(element, duration) {
+function fadeOut(element, duration, displayNone = true) {
     var op = 1;
     var timer = setInterval(function () {
         if (op <= 0.1){
             clearInterval(timer);
-            element.style.display = 'none';
+            if (displayNone) {
+                element.style.display = 'none';
+            }
+            else {
+                element.style.visibility = "hidden";
+            }
         }
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";

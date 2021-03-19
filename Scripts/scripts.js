@@ -46,4 +46,4 @@ function progressLocation() {
     currentLocation.progress();
 }
 
-export {progressLocation}
+export {progressLocation, currentLocation}

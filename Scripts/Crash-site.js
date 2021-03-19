@@ -35,6 +35,14 @@ class Crash_Site extends Location{
         Crash_Site.resources.addItem(items.PLACEHOLDER, 1);
     }
 
+    getStage() {
+        return this.stage;
+    }
+
+    setStage(stage) {
+        this.stage = stage;
+    }
+
     loadLocation(fadeDelay = 6000) {
         setTimeout(fadeIn, fadeDelay, document.getElementById("speed-toggle"));
         Display_Manager.clearTextDisplay();
@@ -62,6 +70,9 @@ class Crash_Site extends Location{
                 fadeIn(document.getElementById("buttons"), 20);
                 fadeIn(document.getElementById("resource-display"), 20);
                 break;
+            case 7:
+                fadeOut(document.getElementById("buttons"), 20, false);
+                fadeOut(document.getElementById("resource-display"), 20, false);
         }
 
         this.stage++;
@@ -137,7 +148,7 @@ class Crash_Site extends Location{
                 Display_Manager.addTextItem("Spare wiring, mechanical parts, that sort of thing");
                 break;
             case 5:
-                Display_Manager.addTextItem("Climbing into the hold of the ship you find... nothing");
+                Display_Manager.addTextItem("Climbing into the hold of the ship you find... nothing", true);
                 Display_Manager.addTextItem("Wait, there is something!");
                 Display_Manager.addTextItem("Not something useful, of course");
                 Display_Manager.addTextItem("It's just your mail delivery excellence medal");
@@ -146,13 +157,30 @@ class Crash_Site extends Location{
                 Display_Manager.addTextItem("You'd never missed a delivery, ever");
                 Display_Manager.addTextItem("Looks like that was about to end");
                 Display_Manager.addTextItem("Not that it matters if you're dead...");
-                Display_Manager.addTextItem("You do, finally, notice something of use");
+                Display_Manager.addTextItem("You do, finally, notice something of use", true);
                 Display_Manager.addTextItem("The metal shelving that held the mail bins had crumpled on impact");
                 Display_Manager.addTextItem("No wonder the mail is all over the place");
                 Display_Manager.addTextItem("I'll have to reorganize it all later...");
                 Display_Manager.addTextItem("I can however use the shelving for a temporary source of scrap metal");
                 Display_Manager.addTextItem("Maybe I'm not doomed after all...");
                 break;
+            case 7:
+                Display_Manager.addTextItem("Looks like what I scavenged did the trick...");
+                Display_Manager.addTextItem("The life support systems hum in the background", true);
+                Display_Manager.addTextItem("I should now regain around 20% of my total reserves per sol");
+                Display_Manager.addTextItem("There are still a lot of repairs to be done but this will have to do");
+                Display_Manager.addTextItem("Well, now that I'm not going to immediately going to die");
+                Display_Manager.addTextItem("I can focus on what REALLY matters");
+                Display_Manager.addTextItem("Delivering the mail", true);
+                Display_Manager.addTextItem("I think I have some mail sorting robots lying around...");
+                Display_Manager.addTextItem("Maybe I could use them to clean up all this mail");
+                Display_Manager.addTextItem("They're also pretty versatile machines, I could use");
+                Display_Manager.addTextItem("them for many purposes besides just mail sorting");
+                Display_Manager.addTextItem("Actually, I could use them to explore outside the ship...");
+                Display_Manager.addTextItem("That is, until I get my pressure suit operational again");
+                Display_Manager.addTextItem("I better check out these bots to make sure they work");
+            case 8:
+                Display_Manager.addTextItem("You work to repair the robots...");
         }
     }
 
@@ -204,7 +232,8 @@ class Crash_Site extends Location{
                 
                 break;
             case 7:
-                console.log("CASE 7");
+                button = Display_Manager.addEventButton("Examine the robots");
+                button.addEventListener("click", progressLocation, false);
                 break;
         }
     }
