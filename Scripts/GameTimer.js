@@ -1,5 +1,6 @@
 import { Display_Manager } from "./DisplayManager.js";
 import {GameEvents, GiveItemEvent} from "./GameEvents.js";
+import {Resource_Manager, items} from "./ResourceManager.js";
 
 class GameTimer
 {
@@ -44,11 +45,14 @@ class GameTimer
             GameTimer.currentSecond = 0;
         }
         
-        if (GameTimer.currentHour == 50)
+        if (GameTimer.currentHour == 25)
         {
             GameTimer.currentDay++;
             Display_Manager.displayTitleText("Sol 🌣 " + this.currentDay, "8vh");
             GameTimer.currentHour = 0;
+            Resource_Manager.Player_Resources.addItem(items.AIR, Resource_Manager.Player_Resources.vitalsReplenishRate);
+            Resource_Manager.Player_Resources.addItem(items.WATER, Resource_Manager.Player_Resources.vitalsReplenishRate);
+            Resource_Manager.Player_Resources.addItem(items.FOOD, Resource_Manager.Player_Resources.vitalsReplenishRate);
         }
 
         //console.log("Day: " + GameTimer.currentDay + " Hour: " + GameTimer.currentHour + " Second: " + GameTimer.currentSecond);

@@ -20,7 +20,7 @@ class Vitals{
             this.rm = rm;
         }
         else{
-            console.log("vitals was not given a resource manager");
+            console.log("Vitals was not given a resource manager");
         }
         this.wounded = false;
         this.currentCondition = conditions.CRITICAL;
