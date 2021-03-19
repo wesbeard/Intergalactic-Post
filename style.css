@@ -124,7 +124,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     padding-top: 5vh;
-    margin-left: 5vw;
 }
 
 #speed-toggle {

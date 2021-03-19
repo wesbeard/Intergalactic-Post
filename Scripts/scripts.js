@@ -3,8 +3,8 @@ import {Crash_Site} from "./Crash-site.js";
 import {asciiTitle} from "./ASCII-Art.js";
 import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI, addResourceButton} from "./DisplayManager.js";
 import {GameTimer} from "./GameTimer.js";
-
 import {GiveItemProgressEvent} from "./GameEvents.js";
+import {Vitals_Resource_Manager} from "./VitalsResouceManager.js";
 
 var _CrashSite = new Crash_Site();
 var _DisplayManager = new Display_Manager();
@@ -17,9 +17,9 @@ setInterval(_Timer.TimerLoop, 1000); //The start of the game timer (SHOULD ONLY 
 var content = document.getElementById("page-content");
 
 //sets up the players starting items
-Resource_Manager.Player_Resources.addItem(items.FOOD,15);
-Resource_Manager.Player_Resources.addItem(items.WATER, 20);
-Resource_Manager.Player_Resources.addItem(items.AIR, 18);
+Vitals_Resource_Manager.Player_Vitals.addItem(items.FOOD, 10);
+Vitals_Resource_Manager.Player_Vitals.addItem(items.WATER, 10);
+Vitals_Resource_Manager.Player_Vitals.addItem(items.AIR, 10);
 
 startSequence();
 

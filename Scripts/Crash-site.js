@@ -5,6 +5,8 @@ import {asciiCrash} from "./ASCII-Art.js"
 import {GameEvents, GiveItemEvent, GiveItemProgressEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
 import {Audio_Manager, Sounds} from "./AudioManager.js";
+import { Vitals } from "./Vitals.js";
+import { Vitals_Resource_Manager } from "./VitalsResouceManager.js";
 
 var _ResourceManager = new Resource_Manager();
 
@@ -31,7 +33,6 @@ class Crash_Site {
     }
 
     loadLocation(fadeDelay = 6000) {
-        setTimeout(fadeIn, fadeDelay, document.getElementById("time-display"));
         setTimeout(fadeIn, fadeDelay, document.getElementById("speed-toggle"));
         Display_Manager.clearTextDisplay();
         Display_Manager.clearButtons();
@@ -52,6 +53,7 @@ class Crash_Site {
         switch (this.stage) {
             case 4:
                 fadeIn(document.getElementById("vitals"), 20);
+                fadeIn(document.getElementById("time-display"), 20);
                 break;
             case 6:
                 fadeIn(document.getElementById("buttons"), 20);
@@ -200,58 +202,62 @@ class Crash_Site {
             case 7:
                 console.log("CASE 7");
                 break;
-
         }
     }
 
     buttonsPressed(value){
-        var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
-        
-        switch(id) {
+        if (Vitals_Resource_Manager.Player_Vitals.checkVitals()) {
+            var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
 
-            case ButtonTypes.SCRAP_GATHER:
-                Crash_Site.scavengeMetal();
-                break;
+            Vitals_Resource_Manager.Player_Vitals.removeItem(items.FOOD, 1);
+            Vitals_Resource_Manager.Player_Vitals.removeItem(items.WATER, 1);
+            Vitals_Resource_Manager.Player_Vitals.removeItem(items.AIR, 1);
 
-            case ButtonTypes.WIRE_GATHER:
-                Crash_Site.scavengeWire();
-                break;
+            // Move into an event or something later idk
+            if (Resource_Manager.Ship_Resources.getItemCount(items.SCRAP_METAL) == 4) {
+                Display_Manager.addTextItem("Fix your life support", false, false, 0);
+                Display_Manager.addTextItem("This will make your vitals replenish 20% every day", false, false, 0);
+                var repairButton = Display_Manager.addEventButton("Repair", false);
+                repairButton.addEventListener("click", Display_Manager.upgradeLifeSupport, false);
+            }
+            
+            switch(id) {
 
-            case ButtonTypes.MECHANICAL_GATHER:
-                Crash_Site.scavengeParts();
-                break;
-            case ButtonTypes.FOOD_GATHER:
-                Crash_Site.scavengeFood();
-                break;
-            case ButtonTypes.WATER_GATHER:
-                Crash_Site.scavengeWater();
-                break;
-            default:
-                alert("Not valid?");
+                case ButtonTypes.MECHANICAL_GATHER:
+                    Crash_Site.scavengeParts();
+                    break;
+                case ButtonTypes.FOOD_GATHER:
+                    Crash_Site.scavengeFood();
+                    break;
+                case ButtonTypes.WATER_GATHER:
+                    Crash_Site.scavengeWater();
+                    break;
+                case ButtonTypes.SCRAP_GATHER:
+                    Crash_Site.scavengeMetal();
+                    break;
+
+                case ButtonTypes.WIRE_GATHER:
+                    Crash_Site.scavengeWire();
+                    break;
+
+                case ButtonTypes.MECHANICAL_GATHER:
+                    Crash_Site.scavengeParts();
+                    break;
+                default:
+                    alert("Not valid?");
+            }
+        } 
+        else {
+            Display_Manager.addTextItem("Shouldn't gather any more today...", false, false, 0);
+            Display_Manager.addTextItem("I need to wait for life support to regenerate", false, false, 0);
         }
-
-        var rs = Crash_Site.resources;
-        var count = rs.getItemCount(items.WIRING) + rs.getItemCount(items.SCRAP_METAL) + rs.getItemCount(items.MECHANICAL_PARTS) + rs.getItemCount(items.PLACEHOLDER);
-
-        if(count == 1){
-            Crash_Site.resources.removeItem(items.PLACEHOLDER, 1);
-        }
-        else if(count == 0){
-            Crash_Site.endOfDays();
-        }
-
-    }
-
-    static endOfDays(){
-        var button = Display_Manager.addEventButton("Take your next step", false);
-        button.addEventListener("click", progressLocation, false);
     }
 
     static scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
-            var metalEvent = new GiveItemProgressEvent(3, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
+            var metalEvent = new GiveItemProgressEvent(2, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
             Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
@@ -259,7 +265,7 @@ class Crash_Site {
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
-            Display_Manager.addTextItem("You search all over the ship but you cant find any more scrap", false, false);
+            Display_Manager.addTextItem("You cant find any more scrap around the ship", false, false);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER);
             Display_Manager.removeElement(ButtonTypes.SCRAP_GATHER+"-progress");
         }
@@ -303,16 +309,9 @@ class Crash_Site {
 
     static scavengeFood(){
         if (Crash_Site.resources.removeItem(items.FOOD, 1)){
-            if (Resource_Manager.Player_Resources.getItemCount(items.FOOD) < 100){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
-            var foodEvent = new GiveItemProgressEvent(10, Resource_Manager.Player_Resources, items.FOOD, 5, ButtonTypes.FOOD_GATHER);
-            GameTimer.AddEvent(foodEvent);
-            Display_Manager.addTextItem("You manage to find some food", false, false, 2000);
-            }
-            else{
-                Audio_Manager.playSound(Sounds.BAD_BOOP);
-                Display_Manager.addTextItem("You are so full, you couldn't eat another bite", false, false, 2000);
-            }
+            Vitals_Resource_Manager.Player_Vitals.addItem(items.FOOD, 5);
+            Display_Manager.addTextItem("You manage to find some food", false, false, 2000)
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
@@ -324,16 +323,9 @@ class Crash_Site {
 
     static scavengeWater(){
         if (Crash_Site.resources.removeItem(items.WATER, 1)){
-            if (Resource_Manager.Player_Resources.getItemCount(items.WATER) < 100){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
-            var waterEvent = new GiveItemEvent(5, Resource_Manager.Player_Resources, items.WATER, 5);
-            GameTimer.AddEvent(waterEvent);
-            Display_Manager.addTextItem("You manage to find water", false, false, 2000);
-            }
-            else{
-                Audio_Manager.playSound(Sounds.BAD_BOOP);
-                Display_Manager.addTextItem("You are thoroughly quenched", false, false, 2000);
-            }
+            Vitals_Resource_Manager.Player_Vitals.addItem(items.WATER, 5);
+            Display_Manager.addTextItem("You manage to find some water", false, false, 2000);
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
