@@ -260,8 +260,6 @@ class Crash_Site {
             var metalEvent = new GiveItemProgressEvent(2, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
-            Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 5);
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
@@ -277,8 +275,6 @@ class Crash_Site {
             var wiringEvent = new GiveItemProgressEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1, ButtonTypes.WIRE_GATHER);
             GameTimer.AddEvent(wiringEvent);
             Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
-            Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 5);
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
@@ -295,8 +291,6 @@ class Crash_Site {
             var mechEvent = new GiveItemProgressEvent(10, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1, ButtonTypes.MECHANICAL_GATHER);
             GameTimer.AddEvent(mechEvent);
             Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
-            Resource_Manager.Player_Resources.removeItem(items.FOOD, 5);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 5);
         }
         else{
             Audio_Manager.playSound(Sounds.BAD_BOOP);
