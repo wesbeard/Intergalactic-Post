@@ -2,11 +2,12 @@ import {Display_Manager, hideElement, showElement, fadeIn, fadeOut, toggleHideUI
 import {Resource_Manager, items} from "./ResourceManager.js";
 import {progressLocation} from './scripts.js'
 import {asciiCrash} from "./ASCII-Art.js"
-import {GameEvents, GiveItemEvent, GiveItemProgressEvent} from "./GameEvents.js"
+import {GameEvents, GiveItemEvent, GiveItemProgressEvent, DisableButtonEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
 import {Audio_Manager, Sounds} from "./AudioManager.js";
 import { Vitals } from "./Vitals.js";
 import { Vitals_Resource_Manager } from "./VitalsResouceManager.js";
+import {Location} from "./Location.js";
 
 var _ResourceManager = new Resource_Manager();
 
@@ -18,12 +19,14 @@ const ButtonTypes = {
     WATER_GATHER : 'water-gather'
 };
 
-class Crash_Site {
-
+class Crash_Site extends Location{
+    static CS;
     static resources = new Resource_Manager();
 
     constructor(){
+        super();
         this.stage = 1;
+        Crash_Site.CS = this;
         Crash_Site.resources.addItem(items.FOOD, 35);
         Crash_Site.resources.addItem(items.WATER, 35);
         Crash_Site.resources.addItem(items.MECHANICAL_PARTS, 10);
@@ -233,32 +236,35 @@ class Crash_Site {
                     Crash_Site.scavengeWater();
                     break;
                 case ButtonTypes.SCRAP_GATHER:
-                    Crash_Site.scavengeMetal();
+                    Crash_Site.CS.scavengeMetal();
                     break;
 
                 case ButtonTypes.WIRE_GATHER:
-                    Crash_Site.scavengeWire();
+                    Crash_Site.CS.scavengeWire();
                     break;
 
                 case ButtonTypes.MECHANICAL_GATHER:
-                    Crash_Site.scavengeParts();
+                    Crash_Site.CS.scavengeParts();
                     break;
                 default:
                     alert("Not valid?");
             }
         } 
         else {
-            Display_Manager.addTextItem("Shouldn't gather any more today...", false, false, 0);
-            Display_Manager.addTextItem("I need to wait for life support to regenerate", false, false, 0);
+            Display_Manager.addTextItem("I need to wait for life support to regenerate", false, false, 3000);
+            Display_Manager.addTextItem("Shouldn't gather any more today...", false, false, 3000);
         }
     }
 
-    static scavengeMetal(){
+    scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
             var metalEvent = new GiveItemProgressEvent(2, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
             GameTimer.AddEvent(metalEvent);
+            var stopButton = new DisableButtonEvent(2, ButtonTypes.SCRAP_GATHER, this.buttonsPressed);
+            GameTimer.AddEvent(stopButton);
+
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
         }
         else{
@@ -269,11 +275,13 @@ class Crash_Site {
         }
     }
 
-    static scavengeWire(){
+    scavengeWire(){
         if(Crash_Site.resources.removeItem(items.WIRING, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
             var wiringEvent = new GiveItemProgressEvent(5, Resource_Manager.Ship_Resources, items.WIRING, 1, ButtonTypes.WIRE_GATHER);
             GameTimer.AddEvent(wiringEvent);
+            var stopButton2 = new DisableButtonEvent(5, ButtonTypes.WIRE_GATHER, this.buttonsPressed);
+            GameTimer.AddEvent(stopButton2);
             Display_Manager.addTextItem("You scrounge around for some Wiring", false, false, 2000);
         }
         else{
@@ -285,11 +293,13 @@ class Crash_Site {
         }
     }
 
-    static scavengeParts(){
+    scavengeParts(){
         if(Crash_Site.resources.removeItem(items.MECHANICAL_PARTS, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
             var mechEvent = new GiveItemProgressEvent(10, Resource_Manager.Ship_Resources, items.MECHANICAL_PARTS, 1, ButtonTypes.MECHANICAL_GATHER);
             GameTimer.AddEvent(mechEvent);
+            var stopButton3 = new DisableButtonEvent(10, ButtonTypes.MECHANICAL_GATHER, this.buttonsPressed);
+            GameTimer.AddEvent(stopButton3);
             Display_Manager.addTextItem("You pick through the ship for spare Mechanical Parts", false, false, 2000);
         }
         else{
