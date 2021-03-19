@@ -19,6 +19,8 @@ class Resource_Manager{
     static Player_Resources = new Resource_Manager();
     static Ship_Resources = new Resource_Manager();
 
+    vitalsCap = 100;
+
     constructor(){
         this.inventory = {};
     }
@@ -44,6 +46,9 @@ class Resource_Manager{
         if(count <= 0){
             console.log("%cYou cant add " + count, "color='red'");
         }
+        else if ((item == items.WATER || item == items.FOOD || item == items.AIR) && this.getItemCount(item) + count >= 100) {
+            this.inventory[item] = 100;
+        }
         else if(this.inventory[item] != null)
         {
             this.inventory[item] += count;
@@ -55,7 +60,7 @@ class Resource_Manager{
         }
     }
 
-    //returns the amount of items
+    // Returns the amount of items
     getItemCount(item){
         if(this.inventory[item] == null)
         {
@@ -64,6 +69,15 @@ class Resource_Manager{
         }
         else{
             return this.inventory[item];
+        }
+    }
+
+    // Checks if any vitals are low
+    checkVitals() {
+        if (this.getItemCount(items.AIR) <= 0 || this.getItemCount(items.FOOD) <= 0 || this.getItemCount(items.WATER) <= 0) {
+            return false;
+        } else {
+            return true;
         }
     }
 

@@ -5,6 +5,7 @@ import {asciiCrash} from "./ASCII-Art.js"
 import {GameEvents, GiveItemEvent, GiveItemProgressEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
 import {Audio_Manager, Sounds} from "./AudioManager.js";
+import { Vitals } from "./Vitals.js";
 
 var _ResourceManager = new Resource_Manager();
 
@@ -29,7 +30,6 @@ class Crash_Site {
     }
 
     loadLocation(fadeDelay = 6000) {
-        setTimeout(fadeIn, fadeDelay, document.getElementById("time-display"));
         setTimeout(fadeIn, fadeDelay, document.getElementById("speed-toggle"));
         Display_Manager.clearTextDisplay();
         Display_Manager.clearButtons();
@@ -50,6 +50,7 @@ class Crash_Site {
         switch (this.stage) {
             case 4:
                 fadeIn(document.getElementById("vitals"), 20);
+                fadeIn(document.getElementById("time-display"), 20);
                 break;
             case 6:
                 fadeIn(document.getElementById("buttons"), 20);
@@ -190,52 +191,49 @@ class Crash_Site {
             case 7:
                 console.log("CASE 7");
                 break;
-
         }
     }
 
     buttonsPressed(value){
-        var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
-        
-        switch(id) {
+        if (Resource_Manager.Player_Resources.checkVitals()) {
+            var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
 
-            case ButtonTypes.SCRAP_GATHER:
-                Crash_Site.scavengeMetal();
-                break;
+            Resource_Manager.Player_Resources.removeItem(items.FOOD, 1);
+            Resource_Manager.Player_Resources.removeItem(items.WATER, 1);
+            Resource_Manager.Player_Resources.removeItem(items.AIR, 1);
 
-            case ButtonTypes.WIRE_GATHER:
-                Crash_Site.scavengeWire();
-                break;
+            if (Resource_Manager.Player_Resources.getItemCount(items.SCRAP_METAL) >= 10) {
 
-            case ButtonTypes.MECHANICAL_GATHER:
-                Crash_Site.scavengeParts();
-                break;
-            default:
-                alert("Not valid?");
+            }
+            
+            switch(id) {
+
+                case ButtonTypes.SCRAP_GATHER:
+                    Crash_Site.scavengeMetal();
+                    break;
+
+                case ButtonTypes.WIRE_GATHER:
+                    Crash_Site.scavengeWire();
+                    break;
+
+                case ButtonTypes.MECHANICAL_GATHER:
+                    Crash_Site.scavengeParts();
+                    break;
+                default:
+                    alert("Not valid?");
+            }
+        } 
+        else {
+            Display_Manager.addTextItem("Shouldn't gather any more today...", false, false, 0);
+            Display_Manager.addTextItem("I need to wait for life support to regenerate", false, false, 0);
         }
-
-        var rs = Crash_Site.resources;
-        var count = rs.getItemCount(items.WIRING) + rs.getItemCount(items.SCRAP_METAL) + rs.getItemCount(items.MECHANICAL_PARTS) + rs.getItemCount(items.PLACEHOLDER);
-
-        if(count == 1){
-            Crash_Site.resources.removeItem(items.PLACEHOLDER, 1);
-        }
-        else if(count == 0){
-            Crash_Site.endOfDays();
-        }
-
-    }
-
-    static endOfDays(){
-        var button = Display_Manager.addEventButton("Take your next step", false);
-        button.addEventListener("click", progressLocation, false);
     }
 
     static scavengeMetal(){
         
         if(Crash_Site.resources.removeItem(items.SCRAP_METAL, 1)){
             Audio_Manager.playSound(Sounds.GOOD_BOOP);
-            var metalEvent = new GiveItemProgressEvent(3, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
+            var metalEvent = new GiveItemProgressEvent(2, Resource_Manager.Ship_Resources, items.SCRAP_METAL, 1, ButtonTypes.SCRAP_GATHER);
             GameTimer.AddEvent(metalEvent);
             Display_Manager.addTextItem("You start to gather some Scrap Metal", false, false, 2000);
         }

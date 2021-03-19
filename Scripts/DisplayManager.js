@@ -10,7 +10,7 @@ const SPEEDS = {
 
 class Display_Manager{
 
-    static fadeMultiplier = 2000;
+    static fadeMultiplier = 0;
 
     static _PlayerVitals = new Vitals(Resource_Manager.Player_Resources);
 
@@ -201,7 +201,7 @@ class Display_Manager{
 
         if(textDisplayContents.length > 1) {
             //if there is more than one element then it starts fading in the rest 1 at a time
-            Display_Manager.fadeInEachElement(textDisplayContents, 1);
+            Display_Manager.fadeInEachElement(textDisplayContents, 0);
             
         }
         else if(textDisplayContents.length > 0){
