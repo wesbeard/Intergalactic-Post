@@ -6,6 +6,7 @@ import {GameEvents, GiveItemEvent, GiveItemProgressEvent} from "./GameEvents.js"
 import { GameTimer } from "./GameTimer.js";
 import {Audio_Manager, Sounds} from "./AudioManager.js";
 import { Vitals } from "./Vitals.js";
+import { Vitals_Resource_Manager } from "./VitalsResouceManager.js";
 
 var _ResourceManager = new Resource_Manager();
 
@@ -195,12 +196,12 @@ class Crash_Site {
     }
 
     buttonsPressed(value){
-        if (Resource_Manager.Player_Resources.checkVitals()) {
+        if (Vitals_Resource_Manager.Player_Vitals.checkVitals()) {
             var id = value.target.id; //gives you the id of the button pressed so you can use it in a switch statement
 
-            Resource_Manager.Player_Resources.removeItem(items.FOOD, 1);
-            Resource_Manager.Player_Resources.removeItem(items.WATER, 1);
-            Resource_Manager.Player_Resources.removeItem(items.AIR, 1);
+            Vitals_Resource_Manager.Player_Vitals.removeItem(items.FOOD, 1);
+            Vitals_Resource_Manager.Player_Vitals.removeItem(items.WATER, 1);
+            Vitals_Resource_Manager.Player_Vitals.removeItem(items.AIR, 1);
 
             // Move into an event or something later idk
             if (Resource_Manager.Ship_Resources.getItemCount(items.SCRAP_METAL) == 4) {
