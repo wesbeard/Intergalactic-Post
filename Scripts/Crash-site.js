@@ -14,7 +14,9 @@ var _ResourceManager = new Resource_Manager();
 const ButtonTypes = {
     SCRAP_GATHER : 'scrap-gather',
     MECHANICAL_GATHER : 'mechanical-gather',
-    WIRE_GATHER : 'wire-gather'
+    WIRE_GATHER : 'wire-gather',
+    FOOD_GATHER : 'food-gather',
+    WATER_GATHER : 'water-gather'
 };
 
 class Crash_Site extends Location{
@@ -25,7 +27,7 @@ class Crash_Site extends Location{
         super();
         this.stage = 1;
         Crash_Site.CS = this;
-        Crash_Site.resources.addItem(items.FOOD, 20);
+        Crash_Site.resources.addItem(items.FOOD, 35);
         Crash_Site.resources.addItem(items.WATER, 35);
         Crash_Site.resources.addItem(items.MECHANICAL_PARTS, 10);
         Crash_Site.resources.addItem(items.WIRING, 15);
@@ -190,6 +192,14 @@ class Crash_Site extends Location{
                 button = Display_Manager.addButtonsButton("Gather Parts", ButtonTypes.MECHANICAL_GATHER);
                 button.addEventListener("click", this.buttonsPressed, false);
                 Display_Manager.addProgressBar(ButtonTypes.MECHANICAL_GATHER);
+
+                button = Display_Manager.addButtonsButton("Gather Food", ButtonTypes.FOOD_GATHER);
+                button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.FOOD_GATHER);
+
+                button = Display_Manager.addButtonsButton("Gather Water", ButtonTypes.WATER_GATHER);
+                button.addEventListener("click", this.buttonsPressed, false);
+                Display_Manager.addProgressBar(ButtonTypes.WATER_GATHER);
                 
                 break;
             case 7:
@@ -216,6 +226,15 @@ class Crash_Site extends Location{
             
             switch(id) {
 
+                case ButtonTypes.MECHANICAL_GATHER:
+                    Crash_Site.scavengeParts();
+                    break;
+                case ButtonTypes.FOOD_GATHER:
+                    Crash_Site.scavengeFood();
+                    break;
+                case ButtonTypes.WATER_GATHER:
+                    Crash_Site.scavengeWater();
+                    break;
                 case ButtonTypes.SCRAP_GATHER:
                     Crash_Site.CS.scavengeMetal();
                     break;
@@ -289,6 +308,34 @@ class Crash_Site extends Location{
             Display_Manager.addTextItem("it just might collapse on you...", false, false);
             Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER);
             Display_Manager.removeElement(ButtonTypes.MECHANICAL_GATHER+"-progress");
+        }
+    }
+
+    static scavengeFood(){
+        if (Crash_Site.resources.removeItem(items.FOOD, 1)){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            Vitals_Resource_Manager.Player_Vitals.addItem(items.FOOD, 5);
+            Display_Manager.addTextItem("You manage to find some food", false, false, 2000)
+        }
+        else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
+            Display_Manager.addTextItem("The best you could find is some crumbs...", false, false);
+            Display_Manager.removeElement(ButtonTypes.FOOD_GATHER);
+            Display_Manager.removeElement(ButtonTypes.FOOD_GATHER+"-progress");
+        }
+    }
+
+    static scavengeWater(){
+        if (Crash_Site.resources.removeItem(items.WATER, 1)){
+            Audio_Manager.playSound(Sounds.GOOD_BOOP);
+            Vitals_Resource_Manager.Player_Vitals.addItem(items.WATER, 5);
+            Display_Manager.addTextItem("You manage to find some water", false, false, 2000);
+        }
+        else{
+            Audio_Manager.playSound(Sounds.BAD_BOOP);
+            Display_Manager.addTextItem("You try to find more water, but couldn't", false, false);  
+            Display_Manager.removeElement(ButtonTypes.WATER_GATHER);
+            Display_Manager.removeElement(ButtonTypes.WATER_GATHER+"-progress");
         }
     }
 
