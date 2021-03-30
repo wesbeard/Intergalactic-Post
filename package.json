@@ -1,0 +1,24 @@
+{
+  "name": "Intergalactic-Post",
+  "version": "1.0.0",
+  "description": "If you are trying this out locally you need to run it from a local server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesbeard/Intergalactic-Post.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wesbeard/Intergalactic-Post/issues"
+  },
+  "homepage": "https://github.com/wesbeard/Intergalactic-Post#readme",
+  "dependencies": {
+    "D": "^1.0.0",
+    "jest": "^26.6.3"
+  }
+}
