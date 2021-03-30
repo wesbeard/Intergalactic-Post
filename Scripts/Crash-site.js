@@ -332,6 +332,10 @@ class Crash_Site {
     setLocationArtwork() {
         Display_Manager.setArtwork(asciiCrash)
     }
+
+    static createAutomationBot(type) {
+
+    }
 }
 
 export {Crash_Site}
