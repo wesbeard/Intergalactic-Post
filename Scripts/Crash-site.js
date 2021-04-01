@@ -198,6 +198,8 @@ class Crash_Site {
                 button.addEventListener("click", this.buttonsPressed, false);
                 Display_Manager.addProgressBar(ButtonTypes.WATER_GATHER);
                 
+                Display_Manager.addTextItem("Metal bot added.", false, false, 2000);
+                setInterval(this.createAutomationBot(ButtonTypes.SCRAP_GATHER), 1000);
                 break;
             case 7:
                 console.log("CASE 7");
@@ -333,8 +335,33 @@ class Crash_Site {
         Display_Manager.setArtwork(asciiCrash)
     }
 
-    static createAutomationBot(type) {
+    createAutomationBot(type) {
+        id = type.target.id;
+        switch(id) {
 
+            case ButtonTypes.MECHANICAL_GATHER:
+                Crash_Site.scavengeParts();
+                break;
+            case ButtonTypes.FOOD_GATHER:
+                Crash_Site.scavengeFood();
+                break;
+            case ButtonTypes.WATER_GATHER:
+                Crash_Site.scavengeWater();
+                break;
+            case ButtonTypes.SCRAP_GATHER:
+                Crash_Site.scavengeMetal();
+                break;
+
+            case ButtonTypes.WIRE_GATHER:
+                Crash_Site.scavengeWire();
+                break;
+
+            case ButtonTypes.MECHANICAL_GATHER:
+                Crash_Site.scavengeParts();
+                break;
+            default:
+                alert("Not valid?");
+        }
     }
 }
 
