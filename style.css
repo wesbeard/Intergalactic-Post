@@ -126,6 +126,18 @@ button:hover {
     padding-top: 5vh;
 }
 
+#volume-toggle {
+    font-size: 10pt;
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    line-height: 0px;
+}
+
+#volume-toggle:hover{
+    cursor:pointer;
+}
+
 #speed-toggle {
     font-size: 10pt;
     position: absolute;

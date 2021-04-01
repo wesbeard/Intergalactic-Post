@@ -2,11 +2,18 @@ import {Resource_Manager, items} from "./ResourceManager.js";
 import {Vitals} from "./Vitals.js";
 import {GameTimer} from "./GameTimer.js"
 import { Vitals_Resource_Manager } from "./VitalsResouceManager.js";
+import { Audio_Manager } from "./AudioManager.js";
 
 const SPEEDS = {
     2000: "Slow",
     1000: "Fast",
     0: "Instant"
+};
+
+const VOLUMES = {
+    false: "Mute",
+    true: "play"
+
 };
 
 class Display_Manager{
@@ -59,6 +66,12 @@ class Display_Manager{
         this.pageContent.appendChild(speedToggle);
         speedToggle.addEventListener("click", this.toggleSpeed);
         speedToggle.style.display = "none";
+    }
+
+    static toggleMute() 
+    {
+        var muteToggle = document.getElementById("volume-toggle");
+        muteToggle.innerHTML = "< Volume: " + VOLUMES[Display_Manager.Audio_Manager.isMute] + " >";
     }
 
     static toggleSpeed() {
