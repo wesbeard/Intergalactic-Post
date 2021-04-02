@@ -1,5 +1,11 @@
 const { test } = require('@jest/globals')
 
-test("Make it so the user can choose to have audio or not", () => {
+const ButtonTypes = {
+    ToggleAudioMute : 'volume-toggle',
+};
 
+test("Make it so the user can choose to have audio or not", () => {
+    expect()
+    expect()
+    expect()
 });
